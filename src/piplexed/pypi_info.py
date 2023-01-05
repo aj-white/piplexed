@@ -28,8 +28,6 @@ def find_outdated_packages(stable: bool = True):
     session = CachedSession("pypi_cache", backend="sqlite", expire_after=360)
     for pkg in venvs:
         for pypi_release in get_pypi_versions(session, pkg.name, stable):
-            response = session.get(pypi_release)
-            print(f"release came from cache: {response.from_cache}")
             if pypi_release.version > pkg.version:
                 updates.append({"package": pkg.name, "pipx": pkg.version, "pypi": pypi_release.version})
                 break
