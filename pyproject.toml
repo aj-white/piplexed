@@ -27,7 +27,8 @@ dependencies = [
   "pypi_simple",
   "packaging",
   "typer",
-  "rich"
+  "rich",
+  "requests-cache"
 ]
 dynamic = ["version"]
 
