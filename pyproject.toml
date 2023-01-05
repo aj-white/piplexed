@@ -31,6 +31,9 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.scripts]
+piplexed = "piplexed.cli:app"
+
 [project.urls]
 Documentation = "https://github.com/unknown/piplexed#readme"
 Issues = "https://github.com/unknown/piplexed/issues"
