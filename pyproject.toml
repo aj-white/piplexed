@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "piplexed"
+description = 'Find outdated python packages installed with pipx'
+readme = "README.md"
+requires-python = ">=3.7"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Andrew White", email = "white-aj@outlook.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "pypi_simple",
+  "packaging",
+  "typer",
+  "rich"
+]
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/unknown/piplexed#readme"
+Issues = "https://github.com/unknown/piplexed/issues"
+Source = "https://github.com/unknown/piplexed"
+
+[tool.hatch.version]
+path = "src/piplexed/version.py"
+
