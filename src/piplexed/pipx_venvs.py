@@ -18,6 +18,7 @@ PIPX_LOCAL_VENVS = PIPX_HOME / "venvs"
 class PackageInfo:
     name: NormalizedName
     version: Version
+    python: str | None
 
 
 def get_pipx_metadata():
@@ -28,8 +29,9 @@ def get_pipx_metadata():
                 with open(item) as f:
                     data = json.load(f)
                     pkg_data = PackageInfo(
-                        canonicalize_name(data["main_package"]["package"]),
-                        Version(data["main_package"]["package_version"]),
+                        name=canonicalize_name(data["main_package"]["package"]),
+                        version=Version(data["main_package"]["package_version"]),
+                        python=data["python_version"].split()[-1],
                     )
                     venvs.append(pkg_data)
     return venvs
