@@ -2,6 +2,7 @@ from typing import Iterable
 from rich import print as rich_print
 from rich.text import Text
 from rich.tree import Tree
+from packaging.version import Version
 
 from piplexed.pipx_venvs import PackageInfo
 
@@ -19,5 +20,25 @@ def print_list_tree(packages: Iterable[PackageInfo]) -> None:
         pkg_branch = tree.add(pkg_name)
         pkg_branch.add(version_info)
         pkg_branch.add(python_info)
+
+    rich_print(tree)
+
+
+def print_list_outdated(package_data: Iterable[dict[str, str | Version]]) -> None:
+    tree = Tree("🐍 Pipx Outdated Packages", guide_style="cyan")
+    for pkg in package_data:
+        pkg_name = Text(
+            pkg["package"].title(),
+            "bright_yellow bold",
+        )
+
+        pipx_info = Text("pipx version - ", "white").append(f"{pkg['pipx']}", "red3")
+        pypi_info = Text("PyPI version - ", "white").append(f"{pkg['pypi']}", "green1")
+        if pkg["pypi"].is_prerelease or pkg["pypi"].is_devrelease:
+            pypi_info.append(" ⚠", "bright_yellow")
+
+        pkg_branch = tree.add(pkg_name)
+        pkg_branch.add(pipx_info)
+        pkg_branch.add(pypi_info)
 
     rich_print(tree)
