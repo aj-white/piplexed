@@ -18,7 +18,7 @@ PIPX_LOCAL_VENVS = PIPX_HOME / "venvs"
 class PackageInfo:
     name: NormalizedName
     version: Version
-    python: str | None
+    python: str | None = None
 
 
 def get_pipx_metadata():
