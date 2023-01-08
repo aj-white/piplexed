@@ -12,8 +12,59 @@
 
 ## Overview: What is piplexed ?
 
-`piplexed` is a command line tool to help you easily find if any packages that have been installed with [pipx](https://github.com/pypa/pipx). It attempts to replcate the functionality of the `pip list --outdated` command, but only for pipx installed packages and not their dependencies.
+`piplexed` is a command line tool to help you easily identify packages that have been installed with [pipx](https://github.com/pypa/pipx) that have a newer release on PyPI. 
 
+It attempts to replicate the functionality of the `pip list --outdated` command, but only for pipx installed packages and not their dependencies.
+
+
+## Installation
+
+Piplexed is designed to be installed globally via `pipx`.
+
+To install `piplexed` with `pipx`
+
+```console
+pipx install piplexed
+```
+
+Alternatively you can run it with `pipx` wihtout installing it.
+
+```console
+pipx run piplexed
+```
+
+## Usage
+
+
+### List packages installed with pipx
+
+
+```console
+piplexed list
+```
+Outputs similar information to `pipx list`, albeit minus the names of the binaries, in a nice rich tree format.
+
+![piplesed list output](img\piplexed-list.PNG "piplexed list")]
+
+### List outdated packages installed with pipx (no pre or dev release)
+
+```console
+piplexed list --outdated
+```
+Output ignores prelease and dev releases by default.
+
+![piplexed list outdated output](img\piplexed-list-outdated.PNG "piplexed list outdated")]
+
+
+### List outdated packages installed with pipx
+
+
+```console
+piplexed list --outdated --pre
+```
+Output includes prerelease and dev releases and highlights them.
+
+![piplexed list outdated pre output](img\piplexed-list-outdated-pre.PNG "piplexed list pre outdated")]
 ### Why piplexed ?
 
 Dependency managment in the python ecosystem has always been a bit of a pain. For managing dependencies in a virtual environment we have tools like:
@@ -48,53 +99,7 @@ Having grown tired of manually checking pypi for new versions and not feeling th
 - Only works for packages that are on [PyPI](https://pypi.org), does not work for local packages or git/url etc.
 - Currently no optimisation, so it can be a little slow if you have a lot of pipx installed packages
 
-## Installation
 
-Piplexed is designed to be installed globally via `pipx`.
-
-To install `piplexed` with `pipx`
-
-```console
-pipx install piplexed
-```
-
-Alternatively you can run it with `pipx` wihtout installing it.
-
-```console
-pipx run piplexed
-```
-
-## Usage
-
-
-### List packages installed with pipx
-Outputs similar information to `pipx list`, albeit minus the names of the binaries, in a nice rich tree format.
-
-```console
-piplexed list
-```
-
-![piplesed list output](img\piplexed-list.PNG "piplexed list")]
-
-### List outdated packages installed with pipx
-Output ignores prelease and dev releases.
-
-
-```console
-piplexed list --outdated
-```
-
-![piplexed list outdated output](img\piplexed-list-outdated.PNG "piplexed list outdated")]
-
-### List outdated packages installed with pipx
-Output included prerelease and dev releases and highlights them.
-
-
-```console
-piplexed list --outdated --pre
-```
-
-![piplexed list outdated pre output](img\piplexed-list-outdated-pre.PNG "piplexed list pre outdated")]
 
 ## License
 
