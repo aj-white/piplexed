@@ -9,7 +9,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Why piplexed ?](#Why-piplexed-?)
+- [Why piplexed ?](#why-piplexed-?)
 - [Caveats](#caveats)
 - [License](#license)
 
@@ -47,7 +47,9 @@ piplexed list
 ```
 Outputs similar information to `pipx list`, albeit minus the names of the binaries, in a nice rich tree format.
 
-![piplesed list output](img\piplexed-list.PNG "piplexed list")]
+<p>
+<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list.PNG" width=300/>
+</p>
 
 ### List outdated packages installed with pipx (no pre or dev release)
 
@@ -56,9 +58,10 @@ piplexed list --outdated
 ```
 Output ignores prelease and dev releases by default.
 
-![piplexed list outdated output](img\piplexed-list-outdated.PNG "piplexed list outdated")]
+<p>
+<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list-outdated.PNG" width=300/>
+</p>
 
-## Jeff
 
 ### List outdated packages installed with pipx
 
@@ -68,8 +71,11 @@ piplexed list --outdated --pre
 ```
 Output includes prerelease and dev releases and highlights them.
 
-![piplexed list outdated pre output](img\piplexed-list-outdated-pre.PNG "piplexed list pre outdated")]
-### Why piplexed ?
+<p>
+<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list-outdated-pre.PNG" width=300/>
+</p>
+
+## Why piplexed ?
 
 Dependency managment in the python ecosystem has always been a bit of a pain. It is usually recommended to create a virtual environment for each new project.
 
