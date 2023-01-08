@@ -68,22 +68,33 @@ pipx run piplexed
 
 
 ### List packages installed with pipx
+Outputs similar information to `pipx list`, albeit minus the names of the binaries, in a nice rich tree format.
 
 ```console
 piplexed list
 ```
 
-### List outdated packages installed with pipx (ignoring pre and dev releases)
+![piplesed list output](img\piplexed-list.PNG "piplexed list")]
+
+### List outdated packages installed with pipx
+Output ignores prelease and dev releases.
+
 
 ```console
 piplexed list --outdated
 ```
 
-### List outdated packages installed with pipx (including pre and dev releases)
+![piplexed list outdated output](img\piplexed-list-outdated.PNG "piplexed list outdated")]
+
+### List outdated packages installed with pipx
+Output included prerelease and dev releases and highlights them.
+
 
 ```console
 piplexed list --outdated --pre
 ```
+
+![piplexed list outdated pre output](img\piplexed-list-outdated-pre.PNG "piplexed list pre outdated")]
 
 ## License
 
