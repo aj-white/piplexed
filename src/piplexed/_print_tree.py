@@ -13,9 +13,9 @@ def print_list_tree(packages: Iterable[PackageInfo]) -> None:
 
         pkg_name = Text(
             pkg.name.title(),
-            "bright_yellow bold",
+            "dark_orange bold",
         )
-        version_info = Text("version - ", "dim").append(f"{pkg.version}", "blue")
+        version_info = Text("version - ", "white").append(f"{pkg.version}", "deep_sky_blue1")
         python_info = Text("python - ", "white").append(pkg.python, "dark_green")
         pkg_branch = tree.add(pkg_name)
         pkg_branch.add(version_info)
