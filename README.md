@@ -9,7 +9,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Why piplexed ?](#why-piplexed-?)
+- [Why piplexed ?](#why-piplexed)
 - [Caveats](#caveats)
 - [License](#license)
 
@@ -75,7 +75,7 @@ Output includes prerelease and dev releases and highlights them.
 <img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list-outdated-pre.PNG" width=300/>
 </p>
 
-## Why piplexed ?
+## Why piplexed
 
 Dependency managment in the python ecosystem has always been a bit of a pain. It is usually recommended to create a virtual environment for each new project.
 
