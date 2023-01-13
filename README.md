@@ -5,6 +5,11 @@
 
 -----
 
+⚠ ⚠    STILL IN DEVELOPMENT - WORKING ON DOCS AND ADDING TESTS    ⚠ ⚠
+
+once complete a version will be uploaded to PyPI
+
+---
 **Table of Contents**
 
 - [Installation](#installation)
