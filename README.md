@@ -48,7 +48,7 @@ piplexed list
 Outputs similar information to `pipx list`, albeit minus the names of the binaries, in a nice rich tree format.
 
 <p>
-<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list.PNG" width=300/>
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG" width=300/>
 </p>
 
 ### List outdated packages installed with pipx (no pre or dev release)
@@ -59,7 +59,7 @@ piplexed list --outdated
 Output ignores prelease and dev releases by default.
 
 <p>
-<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list-outdated.PNG" width=300/>
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated.PNG" width=300/>
 </p>
 
 
@@ -72,7 +72,7 @@ piplexed list --outdated --pre
 Output includes prerelease and dev releases and highlights them.
 
 <p>
-<img src="https://github.com/aj-white/piplexed/raw/main/img/piplexed-list-outdated-pre.PNG" width=300/>
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated-pre.PNG" width=300/>
 </p>
 
 ## Why piplexed
