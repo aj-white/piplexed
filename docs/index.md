@@ -11,7 +11,7 @@
 
 ## Overview
 
-Piplexed is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/).
+Piplexed is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/). It displays it's output as a nice [rich](https://github.com/Textualize/rich) printed tree.
 
 ### What is pipx ?
 
