@@ -26,5 +26,8 @@ nav:
   - Piplexed: index.md
   - Why-piplexed.md
   - How-piplexed-works.md
+  - Caveats.md
+  - Release-notes.md
+
 extra_css:
 - css/custom.css
