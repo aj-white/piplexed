@@ -22,6 +22,9 @@ theme:
       - content.code.copy
 markdown_extensions:
   - admonition
-
+nav:
+  - Piplexed: index.md
+  - Why-piplexed.md
+  - How-piplexed-works.md
 extra_css:
 - css/custom.css
