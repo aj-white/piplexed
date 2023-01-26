@@ -20,6 +20,8 @@ theme:
       name: Switch to dark mode
   features:
       - content.code.copy
+markdown_extensions:
+  - admonition
 
 extra_css:
 - css/custom.css
