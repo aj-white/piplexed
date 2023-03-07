@@ -8,18 +8,25 @@ from piplexed.pipx_venvs import get_pipx_metadata
 
 
 def get_pypi_versions(session: CachedSession, package_name: str, stable: bool):
-
-    with PyPISimple(session=session) as client:
-
+    with PyPISimple() as client:
         package_page = client.get_project_page(package_name)
-        for pkg in package_page.packages[::-1]:
-            if pkg.package_type == "sdist":
-                pdata = PackageInfo(name=canonicalize_name(pkg.project), version=Version(pkg.version))
-                if stable:
-                    if not pdata.version.is_prerelease and not pdata.version.is_devrelease:
-                        yield pdata
-                else:
-                    yield pdata
+        canonicalized_pkg_name = canonicalize_name(package_page.project)
+
+        # use max(Version) instead of reversing order of package_page as recommended in PEP 700
+        # https://peps.python.org/pep-0700/
+
+        if stable:
+            latest_version = max(
+                pkg_vsn
+                for pkg in package_page.packages
+                if pkg.package_type == "sdist"
+                and not (pkg_vsn := Version(pkg.version)).is_devrelease
+                and not pkg_vsn.is_prerelease
+            )
+        else:
+            latest_version = max(Version(pkg.version) for pkg in package_page.packages if pkg.package_type == "sdist")
+
+        yield PackageInfo(name=canonicalized_pkg_name, version=latest_version)
 
 
 def find_outdated_packages(stable: bool = True):
