@@ -8,9 +8,8 @@ from piplexed.pipx_venvs import PackageInfo
 
 
 def print_list_tree(packages: Iterable[PackageInfo]) -> None:
-    tree = Tree("🐍 Pipx Packages", guide_style="cyan")
+    tree = Tree("Pip❎ Packages", guide_style="cyan")
     for pkg in packages:
-
         pkg_name = Text(
             pkg.name.title(),
             "dark_orange bold",
@@ -25,7 +24,7 @@ def print_list_tree(packages: Iterable[PackageInfo]) -> None:
 
 
 def print_list_outdated(package_data: Iterable[dict[str, str | Version]]) -> None:
-    tree = Tree("🐍 Pipx Outdated Packages", guide_style="cyan")
+    tree = Tree("Pip❌ Outdated Packages", guide_style="cyan")
     for pkg in package_data:
         pkg_name = Text(
             pkg["package"].title(),
