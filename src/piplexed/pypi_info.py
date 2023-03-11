@@ -8,7 +8,7 @@ from piplexed.pipx_venvs import get_pipx_metadata
 
 
 def get_pypi_versions(session: CachedSession, package_name: str, stable: bool):
-    with PyPISimple() as client:
+    with PyPISimple(session=session) as client:
         package_page = client.get_project_page(package_name)
         canonicalized_pkg_name = canonicalize_name(package_page.project)
 
