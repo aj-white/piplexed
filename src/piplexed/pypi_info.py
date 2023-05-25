@@ -1,4 +1,4 @@
-from pypi_simple import PyPISimple
+from pypi_simple import DistributionPackage, PyPISimple
 from packaging.version import Version
 from packaging.utils import canonicalize_name
 from requests_cache import CachedSession
@@ -15,18 +15,27 @@ def get_pypi_versions(session: CachedSession, package_name: str, stable: bool):
         # use max(Version) instead of reversing order of package_page as recommended in PEP 700
         # https://peps.python.org/pep-0700/
 
-        if stable:
-            latest_version = max(
-                pkg_vsn
-                for pkg in package_page.packages
-                if pkg.package_type == "sdist"
-                and not (pkg_vsn := Version(pkg.version)).is_devrelease
-                and not pkg_vsn.is_prerelease
-            )
-        else:
-            latest_version = max(Version(pkg.version) for pkg in package_page.packages if pkg.package_type == "sdist")
+        latest_version = get_latest_version(package_page.packages, stable)
 
         yield PackageInfo(name=canonicalized_pkg_name, version=latest_version)
+
+
+def get_latest_version(packages: list[DistributionPackage], stable: bool):
+    if stable:
+        latest_version = max(
+            pkg_vsn
+            for pkg in packages
+            if pkg.package_type == "sdist"
+            and not (pkg_vsn := Version(pkg.version)).is_devrelease
+            and not pkg.is_yanked
+            and not pkg_vsn.is_prerelease
+        )
+    else:
+        latest_version = max(
+            Version(pkg.version) for pkg in packages if pkg.package_type == "sdist" and not pkg.is_yanked
+        )
+
+    return latest_version
 
 
 def find_outdated_packages(stable: bool = True):
