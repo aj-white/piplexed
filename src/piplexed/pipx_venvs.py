@@ -25,7 +25,7 @@ def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS):
     venvs = []
     for env in venv_dir.iterdir():
         for item in env.iterdir():
-            if item.suffix == ".json":
+            if item.suffix == ".json":  # pragma: no branch
                 with open(item) as f:
                     data = json.load(f)
                     pkg_data = PackageInfo(
