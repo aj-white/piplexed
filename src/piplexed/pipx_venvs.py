@@ -21,9 +21,9 @@ class PackageInfo:
     python: str | None = None
 
 
-def get_pipx_metadata():
+def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS):
     venvs = []
-    for env in PIPX_LOCAL_VENVS.iterdir():
+    for env in venv_dir.iterdir():
         for item in env.iterdir():
             if item.suffix == ".json":
                 with open(item) as f:
