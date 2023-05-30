@@ -2,4 +2,3 @@
 pytest
 pytest-pretty
 coverage[toml]
-pytest-mock
