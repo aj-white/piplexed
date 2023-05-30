@@ -1,4 +1,5 @@
-from pypi_simple import DistributionPackage, PyPISimple
+from pypi_simple import DistributionPackage
+from pypi_simple import PyPISimple
 from packaging.version import Version
 from packaging.utils import canonicalize_name
 from requests_cache import CachedSession
