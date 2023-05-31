@@ -1,13 +1,12 @@
-import pytest
-
 from unittest.mock import create_autospec
 from unittest.mock import patch
 
+import pytest
 from packaging.version import Version
 from pypi_simple import DistributionPackage
 from pypi_simple import ProjectPage
-from piplexed.pipx_venvs import PackageInfo
 
+from piplexed.pipx_venvs import PackageInfo
 from piplexed.pypi_info import get_latest_version
 from piplexed.pypi_info import get_pypi_versions
 

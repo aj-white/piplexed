@@ -1,8 +1,7 @@
 from packaging.version import Version
 
-from piplexed.pipx_venvs import get_pipx_metadata
 from piplexed.pipx_venvs import PackageInfo
-
+from piplexed.pipx_venvs import get_pipx_metadata
 
 TEST_PIPX_METADATA = """{
     "injected_packages": {},
@@ -38,5 +37,5 @@ def test_get_pipx_metadata(tmp_path):
     test_json = env_dir / "test.json"
     test_json.write_text(TEST_PIPX_METADATA)
     assert get_pipx_metadata(tmp_path) == [
-        PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2")
+        PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2"),
     ]

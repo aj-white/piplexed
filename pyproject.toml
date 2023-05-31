@@ -90,6 +90,13 @@ unfixable = [
 
 [tool.ruff.isort]
 force-single-line = true
+known-first-party = ["piplexed"]
+
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = ["typer.Option"]
+
+[tool.ruff.per-file-ignores]
+"src/piplexed/cli.py" = ["FBT001", "A001"]  # typer uses booleans in CLI args
 
 [tool.coverage.run]
 parallel = true

@@ -3,10 +3,9 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-from packaging.version import Version
-from packaging.utils import canonicalize_name
 from packaging.utils import NormalizedName
-
+from packaging.utils import canonicalize_name
+from packaging.version import Version
 
 DEFAULT_PIPX_HOME = Path.home() / ".local/pipx"
 DEFAULT_PIPX_BIN_DIR = Path.home() / ".local/bin"
@@ -21,7 +20,7 @@ class PackageInfo:
     python: str | None = None
 
 
-def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS):
+def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
     venvs = []
     for env in venv_dir.iterdir():
         for item in env.iterdir():
