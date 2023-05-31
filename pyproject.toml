@@ -43,3 +43,73 @@ Source = "https://github.com/unknown/piplexed"
 [tool.hatch.version]
 path = "src/piplexed/version.py"
 
+[tool.black]
+target-version = ["py311"]
+line-length = 120
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C4",
+  "COM",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "RUF",
+  "S",
+  "TD",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  # Allow boolean positional values in function calls, like `dict.get(... True)`
+  "FBT003",
+  # Ignore checks for possible passwords and asserts
+  "S101", "S105", "S106", "S107",
+  # Ignore complexity
+  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.isort]
+force-single-line = true
+
+[tool.coverage.run]
+parallel = true
+branch = true
+source = ["piplexed"]
+
+[tool.coverage.paths]
+source = ["src", ".nox/tests-*/**/site-packages"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "noxfile"
+disallow_untyped_decorators = false
