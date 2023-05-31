@@ -21,7 +21,7 @@ def list(
         "-P",
         help="Include pre and dev releases in latest pypi version search",
     ),
-):
+) -> None:
     if outdated and is_prelease:
         print_list_outdated(piplexed.find_outdated_packages(stable=False))
     elif outdated and not is_prelease:

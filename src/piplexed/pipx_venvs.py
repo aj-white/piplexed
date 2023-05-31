@@ -20,7 +20,7 @@ class PackageInfo:
     python: str | None = None
 
 
-def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS):
+def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
     venvs = []
     for env in venv_dir.iterdir():
         for item in env.iterdir():
