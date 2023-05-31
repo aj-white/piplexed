@@ -20,13 +20,17 @@ theme:
       name: Switch to dark mode
   features:
       - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+repo_name: aj-white/piplexed
+repo_url: https://github.com/aj-white/piplexed
 markdown_extensions:
   - admonition
 nav:
   - Piplexed: index.md
   - Why-piplexed.md
   - How-piplexed-works.md
-  - Caveats.md
+  - Future-development.md
   - Release-notes.md
 
 extra_css:
