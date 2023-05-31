@@ -1,14 +1,14 @@
+from packaging.utils import canonicalize_name
+from packaging.version import Version
 from pypi_simple import DistributionPackage
 from pypi_simple import PyPISimple
-from packaging.version import Version
-from packaging.utils import canonicalize_name
 from requests_cache import CachedSession
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
 
 
-def get_pypi_versions(session: CachedSession, package_name: str, stable: bool):
+def get_pypi_versions(session: CachedSession, package_name: str, *, stable: bool):
     with PyPISimple(session=session) as client:
         package_page = client.get_project_page(package_name)
         canonicalized_pkg_name = canonicalize_name(package_page.project)
@@ -16,12 +16,12 @@ def get_pypi_versions(session: CachedSession, package_name: str, stable: bool):
         # use max(Version) instead of reversing order of package_page as recommended in PEP 700
         # https://peps.python.org/pep-0700/
 
-        latest_version = get_latest_version(package_page.packages, stable)
+        latest_version = get_latest_version(package_page.packages, stable=stable)
 
         yield PackageInfo(name=canonicalized_pkg_name, version=latest_version)
 
 
-def get_latest_version(packages: list[DistributionPackage], stable: bool):
+def get_latest_version(packages: list[DistributionPackage], *, stable: bool):
     if stable:
         latest_version = max(
             pkg_vsn
@@ -39,7 +39,7 @@ def get_latest_version(packages: list[DistributionPackage], stable: bool):
     return latest_version
 
 
-def find_outdated_packages(stable: bool = True):
+def find_outdated_packages(*, stable: bool = True):
     updates = []
     venvs = get_pipx_metadata()
     session = CachedSession("pypi_cache", backend="sqlite", expire_after=360)

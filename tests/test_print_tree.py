@@ -1,9 +1,9 @@
-from packaging.version import Version
 from _pytest.capture import CaptureFixture
+from packaging.version import Version
 
-from piplexed.pipx_venvs import PackageInfo
-from piplexed._print_tree import print_list_tree
 from piplexed._print_tree import print_list_outdated
+from piplexed._print_tree import print_list_tree
+from piplexed.pipx_venvs import PackageInfo
 
 
 def test_print_list(capsys: CaptureFixture[str]):

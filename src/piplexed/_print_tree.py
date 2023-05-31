@@ -1,8 +1,9 @@
-from typing import Iterable
+from collections.abc import Iterable
+
+from packaging.version import Version
 from rich import print as rich_print
 from rich.text import Text
 from rich.tree import Tree
-from packaging.version import Version
 
 from piplexed.pipx_venvs import PackageInfo
 

@@ -1,7 +1,8 @@
 import typer
+
 import piplexed
-from piplexed._print_tree import print_list_tree
 from piplexed._print_tree import print_list_outdated
+from piplexed._print_tree import print_list_tree
 
 app = typer.Typer()
 
@@ -15,13 +16,16 @@ def version() -> None:
 def list(
     outdated: bool = typer.Option(False, "--outdated", "-O", help="Find outdated packages installed with pipx"),
     is_prelease: bool = typer.Option(
-        False, "--pre", "-P", help="Include pre and dev releases in latest pypi version search"
+        False,
+        "--pre",
+        "-P",
+        help="Include pre and dev releases in latest pypi version search",
     ),
 ):
     if outdated and is_prelease:
         print_list_outdated(piplexed.find_outdated_packages(stable=False))
     elif outdated and not is_prelease:
-        print_list_outdated(piplexed.find_outdated_packages())
+        print_list_outdated(piplexed.find_outdated_packages(stable=True))
     else:
         print_list_tree(piplexed.get_pipx_metadata())
 
