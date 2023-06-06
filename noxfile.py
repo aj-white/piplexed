@@ -27,3 +27,10 @@ def lint(session):
     session.run("black", "src", "--check")
     session.run("ruff", ".")
     session.run("mypy", "src")
+
+
+@nox.session(python=PYTHON_DEFAULT_VERSION)
+def docs(session):
+    session.run("python", "-m", "pip", "install", "-U", "pip")
+    session.install(".", "-r", DOC_DEPENDENCIES)
+    session.run("mkdocs", "build", "--clean", "--strict")
