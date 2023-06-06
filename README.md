@@ -1,4 +1,4 @@
-# piplexed - Find outdated packages installed with pipx
+# Piplexed - Find outdated packages installed with pipx
 
 [![PyPI - Version](https://img.shields.io/pypi/v/piplexed.svg)](https://pypi.org/project/piplexed)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/piplexed.svg)](https://pypi.org/project/piplexed)
@@ -15,12 +15,12 @@
 
 ## Overview: What is piplexed ?
 
-Piplexed is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/). It displays it's output as a nice [rich](https://github.com/Textualize/rich) printed tree.
+**Piplexed** is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/). It displays it's output as a nice [rich](https://github.com/Textualize/rich) printed tree.
 
 
 ## Installation
 
-Piplexed is designed to be installed globally via **pipx**.
+**Piplexed** is designed to be installed globally via **pipx**.
 
 To install **piplexed**:
 
@@ -88,4 +88,4 @@ It is only intended to work for packages that are installed from [PyPI](https://
 
 ## License
 
-**piplexed** is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+**Piplexed** is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
