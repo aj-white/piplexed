@@ -36,7 +36,7 @@ dynamic = ["version"]
 piplexed = "piplexed.cli:app"
 
 [project.urls]
-Documentation = "https://github.com/unknown/piplexed#readme"
+Documentation = "https://aj-white.github.io/piplexed/"
 Issues = "https://github.com/unknown/piplexed/issues"
 Source = "https://github.com/unknown/piplexed"
 

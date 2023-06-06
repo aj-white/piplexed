@@ -1,9 +1,9 @@
 # Piplexed
 
 --- 
-**Documentation** For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+**Documentation**: [https://aj-white.github.io/piplexed/](https://aj-white.github.io/piplexed/).
 
-**Source Code** [https://github.com/aj-white/piplexed](https://github.com/aj-white/piplexed)
+**Source Code**: [https://github.com/aj-white/piplexed](https://github.com/aj-white/piplexed)
 
 ---
 
