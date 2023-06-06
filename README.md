@@ -1,15 +1,10 @@
-# piplexed - Find outdated packages installed with pipx
+# Piplexed - Find outdated packages installed with pipx
 
 [![PyPI - Version](https://img.shields.io/pypi/v/piplexed.svg)](https://pypi.org/project/piplexed)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/piplexed.svg)](https://pypi.org/project/piplexed)
 
------
+**Documentation**: [https://aj-white.github.io/piplexed/](https://aj-white.github.io/piplexed/)
 
-⚠ ⚠    STILL IN DEVELOPMENT - WORKING ON DOCS AND ADDING TESTS    ⚠ ⚠
-
-once complete a version will be uploaded to PyPI
-
----
 **Table of Contents**
 
 - [Installation](#installation)
@@ -20,18 +15,26 @@ once complete a version will be uploaded to PyPI
 
 ## Overview: What is piplexed ?
 
-Piplexed is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/). It displays it's output as a nice [rich](https://github.com/Textualize/rich) printed tree.
+**Piplexed** is a command line tool to identify outdated python packages, installed from [PyPI](https://pypi.org/), via [pipx](https://pypa.github.io/pipx/). It displays it's output as a nice [rich](https://github.com/Textualize/rich) printed tree.
 
 
 ## Installation
 
-Piplexed is designed to be installed globally via `pipx`.
+**Piplexed** is designed to be installed globally via **pipx**.
 
-To install `piplexed` with `pipx`
+To install **piplexed**:
 
 ```console
 pipx install piplexed
 ```
+
+Alternatively you can run it wihtout installation, supplying the required arguments shown below
+
+```console
+pipx run -- piplexed <ARGS>
+```
+
+
 
 ## Usage
 
@@ -73,16 +76,16 @@ Output includes prerelease and dev releases and highlights them.
 
 ## Why piplexed
 
-The name `piplexed` is a play on words, it contains the letters for pipx and I was also mildly perplexed trying to find a simpler way to identify outdated pipx installed packages, only to discover it didn't exist. Put the two together and well.... you get the idea (naming things is hard after all!).
-For a longer answer see the documentation.
+The name **piplexed** is a play on words, it contains the letters for pipx and I was also mildly perplexed trying to find a simpler way to identify outdated pipx installed packages, only to discover it didn't exist. Put the two together and well.... you get the idea (naming things is hard after all!).
+For a longer answer see the [documentation](https://aj-white.github.io/piplexed/Why-piplexed/).
 
 
 ## Caveats
 
-- Only works for packages that are on [PyPI](https://pypi.org), does not work for local packages or git/url etc.
-- Currently no optimisation, so it can be a little slow if you have a lot of pipx installed packages.
-- Has only been tested on windows 10, as `piplexed` uses that same method of venv discovery as `pipx` it should also work on macOS and linux but there are no guarantees.
+**Piplexed** is a project that I built for my workflow, but it may not work for everyone.
+
+It is only intended to work for packages that are installed from [PyPI](https://pypi.org), so will not work for local packages or git/url etc.
 
 ## License
 
-`piplexed` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+**Piplexed** is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
