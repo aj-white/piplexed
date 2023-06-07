@@ -26,7 +26,8 @@ dependencies = [
   "packaging",
   "typer",
   "rich",
-  "requests-cache"
+  "requests-cache",
+  "platformdirs>=3.5"
 ]
 dynamic = ["version"]
 
