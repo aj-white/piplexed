@@ -45,4 +45,5 @@ jobs:
         python -m pip install nox
     - name: Run tests
       run: |
-        nox --non-interactive --session tests
+        nox --non-interactive --session tests-${{ matrix.python-version }}
+
