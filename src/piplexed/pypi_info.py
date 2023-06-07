@@ -1,18 +1,25 @@
 from __future__ import annotations
 
 from collections.abc import Generator
+from pathlib import Path
 from typing import TypedDict
 from typing import cast
 
 from packaging.utils import NormalizedName
 from packaging.utils import canonicalize_name
 from packaging.version import Version
+from platformdirs import user_cache_dir
 from pypi_simple import DistributionPackage
 from pypi_simple import PyPISimple
 from requests_cache import CachedSession
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
+from piplexed.version import VERSION
+
+DEFAULT_CACHE: Path = (
+    Path(user_cache_dir(appname="piplexed", appauthor="ajwhite", version=VERSION)) / "pypi_cache.sqlite"
+)
 
 
 class PackageVersions(TypedDict):
@@ -52,10 +59,10 @@ def get_latest_version(packages: list[DistributionPackage], *, stable: bool) -> 
     return latest_version
 
 
-def find_outdated_packages(*, stable: bool = True) -> list[PackageVersions]:
+def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageVersions]:
     updates: list[PackageVersions] = []
     venvs = get_pipx_metadata()
-    session = CachedSession("pypi_cache", backend="sqlite", expire_after=360)
+    session = CachedSession(cache_dir, backend="sqlite", expire_after=360)
     for pkg in venvs:
         for pypi_release in get_pypi_versions(session, pkg.name, stable=stable):
             if pypi_release.version > pkg.version:
