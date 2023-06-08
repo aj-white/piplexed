@@ -29,10 +29,12 @@ def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
             if item.suffix == ".json":  # pragma: no branch
                 with open(item) as f:
                     data = json.load(f)
-                    pkg_data = PackageInfo(
-                        name=canonicalize_name(data["main_package"]["package"]),
-                        version=Version(data["main_package"]["package_version"]),
-                        python=data["python_version"].split()[-1],
-                    )
-                    venvs.append(pkg_data)
+                    # packages installed from pypi have the same package and package_or_url
+                    if data["main_package"]["package"] == data["main_package"]["package_or_url"]:
+                        pkg_data = PackageInfo(
+                            name=canonicalize_name(data["main_package"]["package"]),
+                            version=Version(data["main_package"]["package_version"]),
+                            python=data["python_version"].split()[-1],
+                        )
+                        venvs.append(pkg_data)
     return venvs
