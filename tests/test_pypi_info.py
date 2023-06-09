@@ -2,13 +2,15 @@ from unittest.mock import create_autospec
 from unittest.mock import patch
 
 import pytest
+from packaging.utils import canonicalize_name
 from packaging.version import Version
 from pypi_simple import DistributionPackage
 from pypi_simple import ProjectPage
 
 from piplexed.pipx_venvs import PackageInfo
-from piplexed.pypi_info import get_latest_version
+from piplexed.pypi_info import PackageVersions, get_latest_version
 from piplexed.pypi_info import get_pypi_versions
+from piplexed.pypi_info import find_outdated_packages
 
 
 @pytest.mark.parametrize(
@@ -165,7 +167,7 @@ def test_get_latest_version_wheels(packages_data, non_pre_release, expected):
     assert get_latest_version(packages, stable=non_pre_release) == expected
 
 
-@patch("pypi_simple.PyPISimple.get_project_page")
+@patch("piplexed.pypi_info.PyPISimple.get_project_page")
 def test_get_pypi_versions(mock_page):
     packages_data = [
         ("1.0.0", "sdist", False),
@@ -181,3 +183,38 @@ def test_get_pypi_versions(mock_page):
 
     result = get_pypi_versions(session=None, package_name="testproj", stable=True)
     assert list(result) == [PackageInfo(name="testproj", version=Version("2.5.0"), python=None)]
+
+
+@patch("piplexed.pypi_info.get_pipx_metadata")
+@patch("piplexed.pypi_info.get_pypi_versions")
+def test_find_outdated_packages(mock_pypi, mock_pipx_metadata, tmp_path):
+    mock_pipx_metadata.return_value = [
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("1.0.0")),
+    ]
+
+    mock_pypi.return_value = [
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("2.0.0")),
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("1.0.0")),
+    ]
+
+    assert find_outdated_packages(tmp_path, stable=True) == [
+        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.0.0"))
+    ]
+
+
+@patch("piplexed.pypi_info.get_pipx_metadata")
+@patch("piplexed.pypi_info.get_pypi_versions")
+def test_find_outdated_packages_pre(mock_pypi, mock_pipx_metadata, tmp_path):
+    mock_pipx_metadata.return_value = [
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("1.0.0")),
+    ]
+
+    mock_pypi.return_value = [
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("2.1b0")),
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("2.0.0")),
+        PackageInfo(name=canonicalize_name("package_1"), version=Version("1.0.0")),
+    ]
+
+    assert find_outdated_packages(tmp_path, stable=False) == [
+        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.1b0"))
+    ]
