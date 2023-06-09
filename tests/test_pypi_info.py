@@ -8,9 +8,10 @@ from pypi_simple import DistributionPackage
 from pypi_simple import ProjectPage
 
 from piplexed.pipx_venvs import PackageInfo
-from piplexed.pypi_info import PackageVersions, get_latest_version
-from piplexed.pypi_info import get_pypi_versions
+from piplexed.pypi_info import PackageVersions
 from piplexed.pypi_info import find_outdated_packages
+from piplexed.pypi_info import get_latest_version
+from piplexed.pypi_info import get_pypi_versions
 
 
 @pytest.mark.parametrize(
@@ -198,7 +199,7 @@ def test_find_outdated_packages(mock_pypi, mock_pipx_metadata, tmp_path):
     ]
 
     assert find_outdated_packages(tmp_path, stable=True) == [
-        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.0.0"))
+        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.0.0")),
     ]
 
 
@@ -216,5 +217,5 @@ def test_find_outdated_packages_pre(mock_pypi, mock_pipx_metadata, tmp_path):
     ]
 
     assert find_outdated_packages(tmp_path, stable=False) == [
-        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.1b0"))
+        PackageVersions(package=canonicalize_name("package_1"), pipx=Version("1.0.0"), pypi=Version("2.1b0")),
     ]
