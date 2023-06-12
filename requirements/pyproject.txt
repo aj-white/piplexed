@@ -34,7 +34,9 @@ packaging==23.1
     #   piplexed (pyproject.toml)
     #   pypi-simple
 platformdirs==3.5.1
-    # via requests-cache
+    # via
+    #   piplexed (pyproject.toml)
+    #   requests-cache
 pydantic==1.10.8
     # via pypi-simple
 pygments==2.15.1

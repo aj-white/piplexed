@@ -26,7 +26,8 @@ dependencies = [
   "packaging",
   "typer",
   "rich",
-  "requests-cache"
+  "requests-cache",
+  "platformdirs>=3.5"
 ]
 dynamic = ["version"]
 
@@ -97,7 +98,6 @@ extend-immutable-calls = ["typer.Option"]
 "src/piplexed/cli.py" = ["FBT001", "A001"]  # typer uses booleans in CLI args
 
 [tool.coverage.run]
-parallel = true
 branch = true
 source = ["piplexed"]
 

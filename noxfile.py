@@ -5,6 +5,7 @@ PYTHON_DEFAULT_VERSION = "3.11"
 nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = (
     "tests",
+    "coverage_report",
     "lint",
 )
 
@@ -17,7 +18,15 @@ LINT_DEPENDENCIES = "requirements/linting.txt"
 def tests(session):
     session.run("python", "-m", "pip", "install", "-U", "pip")
     session.install(".", "-r", TEST_DEPENDENCIES)
-    session.run("pytest", "tests")
+    session.run("coverage", "run", "-m", "pytest", "tests")
+
+
+@nox.session()
+def coverage_report(session):
+    session.install("coverage[toml]")
+
+    session.run("coverage", "report", "--show-missing", "--fail-under=80")
+    session.run("coverage", "erase")
 
 
 @nox.session(python=PYTHON_DEFAULT_VERSION)
