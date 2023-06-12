@@ -67,5 +67,5 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
                 updates.append({"package": pkg.name, "pipx": pkg.version, "pypi": pypi_release.version})
                 break
 
-    session.remove_expired_responses()
+    session.cache.delete(expired=True)
     return updates
