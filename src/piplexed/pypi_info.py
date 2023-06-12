@@ -17,9 +17,7 @@ from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
 from piplexed.version import VERSION
 
-DEFAULT_CACHE: Path = (
-    Path(user_cache_dir(appname="piplexed", appauthor="ajwhite", version=VERSION)) / "pypi_cache.sqlite"
-)
+DEFAULT_CACHE: Path = Path(user_cache_dir(appname="piplexed", version=VERSION)) / "pypi_cache.sqlite"
 
 
 class PackageVersions(TypedDict):
