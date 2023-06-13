@@ -338,9 +338,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#latest-changes" class="md-nav__link">
-    Latest Changes
+  <a href="#010" class="md-nav__link">
+    0.1.0
   </a>
+  
+    <nav class="md-nav" aria-label="0.1.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -386,9 +413,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#latest-changes" class="md-nav__link">
-    Latest Changes
+  <a href="#010" class="md-nav__link">
+    0.1.0
   </a>
+  
+    <nav class="md-nav" aria-label="0.1.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    Changed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -418,7 +472,22 @@
 
 
 <h1 id="release-notes">Release Notes</h1>
-<h2 id="latest-changes">Latest Changes</h2>
+<h2 id="010">0.1.0</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>If a non-PyPI package (for example a local wheel) is installed with pipx, a <code>NoSuchProjectError</code> results due it not being on PyPI. This has been resolved by using the pipx metadata json file to determine if the package was installed from a non-PyPi source and not request it's details from PyPI</li>
+<li>Various linitng and mypy errors have been squashed.</li>
+</ul>
+<h3 id="added">Added</h3>
+<ul>
+<li>A user cache directory has been added using <a href="https://github.com/platformdirs/platformdirs">platformdirs</a> to cache PyPI responses</li>
+<li>Added <a href="https://github.com/wntrblm/nox">nox</a> as test and lint runner</li>
+<li>Added github actions for linting and tests</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><code>remove_expired_responses()</code> is being depracted in <code>requests-cache</code> this has been replaced with <code>cache.delete(expired=True)</code></li>
+</ul>
 <h2 id="002">0.0.2</h2>
 <p>🔼 Upgrade pypi-simple to 1.1.0 for PEP 700 support.</p>
 
