@@ -1,5 +1,12 @@
 # Release Notes
 
+## 0.1.1
+
+### Fixed
+
+- Github repo link in `pyproject.toml` was wrong so links on PyPI returned a **404** error.
+
+
 ## 0.1.0
 
 ### Fixed

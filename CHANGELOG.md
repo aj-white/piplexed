@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0](https://github.com/aj-white/piplexed/tree/0.1.0) - 2023-06-12
+## [0.1.1](https://github.com/aj-white/piplexed/compare/v0.1.0...v0.1.1) - 2023-06-15
+
+### Fixed
+
+- Erroneous github repo link in `pyproject.toml`
+
+## [0.1.0](https://github.com/aj-white/piplexed/tag/v0.1.0) - 2023-06-12
 
 ### Fixed
 
