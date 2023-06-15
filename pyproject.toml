@@ -36,8 +36,8 @@ piplexed = "piplexed.cli:app"
 
 [project.urls]
 Documentation = "https://aj-white.github.io/piplexed/"
-Issues = "https://github.com/unknown/piplexed/issues"
-Source = "https://github.com/unknown/piplexed"
+Issues = "https://github.com/aj-white/piplexed/issues"
+Source = "https://github.com/aj-white/piplexed"
 
 [tool.hatch.version]
 path = "src/piplexed/version.py"
