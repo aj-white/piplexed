@@ -1,5 +1,10 @@
 # Release Notes
 
+
+## 0.1.2
+
+- Yet another `pyproject.toml` mishap, this time `python_requires` set to the wrong minimum version.
+
 ## 0.1.1
 
 ### Fixed
