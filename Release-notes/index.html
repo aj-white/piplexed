@@ -338,6 +338,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    0.1.1
+  </a>
+  
+    <nav class="md-nav" aria-label="0.1.1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#010" class="md-nav__link">
     0.1.0
   </a>
@@ -346,7 +366,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     Fixed
   </a>
   
@@ -413,6 +433,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    0.1.1
+  </a>
+  
+    <nav class="md-nav" aria-label="0.1.1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#010" class="md-nav__link">
     0.1.0
   </a>
@@ -421,7 +461,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     Fixed
   </a>
   
@@ -472,8 +512,13 @@
 
 
 <h1 id="release-notes">Release Notes</h1>
-<h2 id="010">0.1.0</h2>
+<h2 id="011">0.1.1</h2>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li>Github repo link in <code>pyproject.toml</code> was wrong so links on PyPI returned a <strong>404</strong> error.</li>
+</ul>
+<h2 id="010">0.1.0</h2>
+<h3 id="fixed_1">Fixed</h3>
 <ul>
 <li>If a non-PyPI package (for example a local wheel) is installed with pipx, a <code>NoSuchProjectError</code> results due it not being on PyPI. This has been resolved by using the pipx metadata json file to determine if the package was installed from a non-PyPi source and not request it's details from PyPI</li>
 <li>Various linitng and mypy errors have been squashed.</li>
