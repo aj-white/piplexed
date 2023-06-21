@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.1.2...HEAD)
+
+- Added support for python 3.12
+
+
 ## [0.1.2](https://github.com/aj-white/piplexed/compare/v0.1.1...v0.1.2) - 2023-06-16
 
 ### Fixed
