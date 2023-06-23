@@ -23,6 +23,11 @@
 - Python 3.8+
 - At least one python package installed with **pipx**
 
+!!! note "Windows Users"
+
+    If you experience issues with [strange characters being shown](https://github.com/aj-white/piplexed/issues/21), this is most likely due to Windows ability to handle utf-8 encoding.
+    If this happens you may need to change the code page by typing `chcp 65001` or use a prompt like [ohmyposh](https://ohmyposh.dev/) which does this for you.
+
 ## Installation
 
 **Piplexed** is designed to be installed or run via **pipx**.

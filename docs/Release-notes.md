@@ -1,5 +1,10 @@
 # Release Notes
 
+## Unreleased
+
+- 🔧 Added support for python 3.12
+- 📝 Updated docs for windows display issues
+
 
 ## 0.1.2
 

@@ -1,7 +1,7 @@
 # Piplexed - Find outdated packages installed with pipx
 
 [![PyPI - Version](https://img.shields.io/pypi/v/piplexed.svg)](https://pypi.org/project/piplexed)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/piplexed.svg)](https://pypi.org/project/piplexed)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/piplexed)](https://pypi.org/project/piplexed)
 
 **Documentation**: [https://aj-white.github.io/piplexed/](https://aj-white.github.io/piplexed/)
 
