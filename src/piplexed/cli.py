@@ -27,10 +27,10 @@ def list(
     ),
     table: bool = typer.Option(False, "--table", "-T", help="print output as a table"),
 ) -> None:
-    if outdated and is_prelease:
-        print_list_outdated(piplexed.find_outdated_packages(stable=False))
-    elif outdated and is_prelease and table:
+    if outdated and is_prelease and table:
         print_outdated_table(piplexed.find_outdated_packages(stable=False))
+    elif outdated and is_prelease:
+        print_list_outdated(piplexed.find_outdated_packages(stable=False))
     elif outdated and table and not is_prelease:
         print_outdated_table(piplexed.find_outdated_packages(stable=True))
     elif outdated and not is_prelease:
