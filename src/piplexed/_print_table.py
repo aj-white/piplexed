@@ -2,11 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-
 from rich import print as rich_print
 from rich.table import Table
 from rich.text import Text
-
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pypi_info import PackageVersions
