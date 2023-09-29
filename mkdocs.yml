@@ -27,7 +27,8 @@ repo_url: https://github.com/aj-white/piplexed
 markdown_extensions:
   - admonition
 nav:
-  - Piplexed: index.md
+  - Getting Started: index.md
+  - Command-line-options.md
   - Why-piplexed.md
   - How-piplexed-works.md
   - Future-development.md

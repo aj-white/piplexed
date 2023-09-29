@@ -1,8 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.1.2...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.2.0...HEAD)
 
-- Added support for python 3.12
+## [0.2.0](https://github.com/aj-white/piplexed/compare/v0.1.2...v0.2.0)
+
+### Added
+
+- Support for python 3.12
+- Table option for CLI output
+
+### Changed
+
 - Updated docs for windows display issues
 
 

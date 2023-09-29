@@ -1,9 +1,10 @@
 # Release Notes
 
-## Unreleased
+## 0.2.0
 
 - 🔧 Added support for python 3.12
 - 📝 Updated docs for windows display issues
+- ✨ Table option for CLI output
 
 
 ## 0.1.2
