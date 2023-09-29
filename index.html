@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="Why-piplexed/">
+        <link rel="next" href="Command-line-options/">
       
       <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Piplexed
+              Getting Started
             
           </span>
         </div>
@@ -254,12 +254,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Piplexed
+          Getting Started
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
-        Piplexed
+        Getting Started
       </a>
       
         
@@ -312,8 +312,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
+  <a href="#basic-usage" class="md-nav__link">
+    Basic Usage
   </a>
   
 </li>
@@ -329,6 +329,21 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Command-line-options/" class="md-nav__link">
+        Command Line Options
+      </a>
     </li>
   
 
@@ -454,8 +469,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
+  <a href="#basic-usage" class="md-nav__link">
+    Basic Usage
   </a>
   
 </li>
@@ -491,7 +506,7 @@
 <p><strong>Source Code</strong>: <a href="https://github.com/aj-white/piplexed">https://github.com/aj-white/piplexed</a></p>
 <hr />
 <h2 id="overview">Overview</h2>
-<p><strong>Piplexed</strong> is a command line tool to identify outdated python packages, installed from <a href="https://pypi.org/"><strong>PyPI</strong></a>, via <a href="https://pypa.github.io/pipx/"><strong>pipx</strong></a>. It displays it's output as a nice <a href="https://github.com/Textualize/rich"><strong>rich</strong></a> printed tree.</p>
+<p><strong>Piplexed</strong> is a command line tool to identify outdated python packages, installed from <a href="https://pypi.org/"><strong>PyPI</strong></a>, via <a href="https://pypa.github.io/pipx/"><strong>pipx</strong></a>. It displays it's output as a nice <a href="https://github.com/Textualize/rich"><strong>rich</strong></a> printed tree by default, with an alternative table output if needed.</p>
 <h3 id="what-is-pipx">What is pipx ?</h3>
 <p><strong>Pipx</strong> is a tool to help you install applications written in Python, into isolated environments with the ability to run them globally with no environment activation necessary.</p>
 <h2 id="requirements">Requirements</h2>
@@ -509,10 +524,10 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 <p>To install <strong>piplexed</strong> with <strong>pipx</strong></p>
 <pre><code class="language-console">pipx install piplexed
 </code></pre>
-<p>To run <strong>piplexed</strong></p>
+<p>Or to run <strong>piplexed</strong> without installing</p>
 <pre><code class="language-console">pipx run -- piplexed list --outdated
 </code></pre>
-<h2 id="examples">Examples</h2>
+<h2 id="basic-usage">Basic Usage</h2>
 <p>Show the installed package version and python version of the virtual environment of packages installed with <strong>pipx</strong>.
 (<em>Similar to the <code>pipx list</code> command</em>).</p>
 <pre><code class="language-console">piplexed list
