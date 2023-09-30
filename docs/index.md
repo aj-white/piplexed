@@ -34,14 +34,14 @@
 
 To install **piplexed** with **pipx**
 
-```console
-pipx install piplexed
+```shell
+$ pipx install piplexed
 ```
 
 Or to run **piplexed** without installing
 
-```console
-pipx run -- piplexed list --outdated
+```shell
+$ pipx run -- piplexed list --outdated
 ```
 
 
@@ -49,8 +49,8 @@ pipx run -- piplexed list --outdated
 
 Show the installed package version and python version of the virtual environment of packages installed with **pipx**.
 (*Similar to the `pipx list` command*).
-```console
-piplexed list
+```shell
+$ piplexed list
 ```
 <p align="center">
 <a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG">
@@ -59,8 +59,8 @@ piplexed list
 </p>
 
 Show the installed package version and the latest PyPI version, excluding pre-release and dev-release versions.
-```console
-piplexed list --outdated
+```shell
+$ piplexed list --outdated
 ```
 
 <p align="center">
@@ -70,7 +70,7 @@ piplexed list --outdated
 </p>
 
 Show the installed package version and the latest PyPI version, including pre-release and dev-release versions.
-```console
+```shell
 piplexed list --outdated --pre
 ```
 
