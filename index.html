@@ -522,15 +522,15 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 <h2 id="installation">Installation</h2>
 <p><strong>Piplexed</strong> is designed to be installed or run via <strong>pipx</strong>.</p>
 <p>To install <strong>piplexed</strong> with <strong>pipx</strong></p>
-<pre><code class="language-console">pipx install piplexed
+<pre><code class="language-shell">$ pipx install piplexed
 </code></pre>
 <p>Or to run <strong>piplexed</strong> without installing</p>
-<pre><code class="language-console">pipx run -- piplexed list --outdated
+<pre><code class="language-shell">$ pipx run -- piplexed list --outdated
 </code></pre>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>Show the installed package version and python version of the virtual environment of packages installed with <strong>pipx</strong>.
 (<em>Similar to the <code>pipx list</code> command</em>).</p>
-<pre><code class="language-console">piplexed list
+<pre><code class="language-shell">$ piplexed list
 </code></pre>
 <p align="center">
 <a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG">
@@ -539,7 +539,7 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 </p>
 
 <p>Show the installed package version and the latest PyPI version, excluding pre-release and dev-release versions.</p>
-<pre><code class="language-console">piplexed list --outdated
+<pre><code class="language-shell">$ piplexed list --outdated
 </code></pre>
 <p align="center">
 <a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated.PNG">
@@ -548,7 +548,7 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 </p>
 
 <p>Show the installed package version and the latest PyPI version, including pre-release and dev-release versions.</p>
-<pre><code class="language-console">piplexed list --outdated --pre
+<pre><code class="language-shell">piplexed list --outdated --pre
 </code></pre>
 <p align="center">
 <a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated-pre.PNG">
