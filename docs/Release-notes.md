@@ -1,5 +1,9 @@
 # Release Notes
 
+# Unreleased
+
+- 📝Minor docs fix for shell examples
+
 ## 0.2.0
 
 - 🔧 Added support for python 3.12

@@ -4,8 +4,8 @@ The commands of *piplexed* can been seen by running `piplexed --help`
 
 For each each command running `--help` will show all the command line options, which are detailed below.
 ```shell
-piplexed list --help
-piplexed version --help
+$ piplexed list --help
+$ piplexed version --help
 ```
 
 ## piplexed list
