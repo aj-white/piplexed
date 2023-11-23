@@ -58,6 +58,22 @@ $ piplexed list
 </a>
 </p>
 
+If you prefer there is a more compact table view option, which is useful if there are lots of installed packages.
+```shell
+$ piplexed list --table
+```
+<p align="center">
+<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG">
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG"/>
+</a>
+</p>
+
+!!! warning "Deprecation Warning"
+
+    The table view will become the default view from v0.4.0. This is because it provides an easier to read,
+    compact output. The tree view will still be available but the options `--tree` / `-T` will need to be passed
+    on the command line 
+
 Show the installed package version and the latest PyPI version, excluding pre-release and dev-release versions.
 ```shell
 $ piplexed list --outdated
