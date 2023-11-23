@@ -538,6 +538,21 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 </a>
 </p>
 
+<p>If you prefer there is a more compact table view option, which is useful if there are lots of installed packages.</p>
+<pre><code class="language-shell">$ piplexed list --table
+</code></pre>
+<p align="center">
+<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG">
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG"/>
+</a>
+</p>
+
+<div class="admonition warning">
+<p class="admonition-title">Deprecation Warning</p>
+<p>The table view will become the default view from v0.4.0. This is because it provides an easier to read,
+compact output. The tree view will still be available but the options <code>--tree</code> / <code>-T</code> will need to be passed
+on the command line </p>
+</div>
 <p>Show the installed package version and the latest PyPI version, excluding pre-release and dev-release versions.</p>
 <pre><code class="language-shell">$ piplexed list --outdated
 </code></pre>
