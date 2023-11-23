@@ -14,7 +14,7 @@ def print_list_table(packages: Iterable[PackageInfo]) -> None:
     table = Table(title="Pip❎ Packages")
     table.add_column("Package Name", justify="right", style="dark_orange", no_wrap=True)
     table.add_column("Pipx Version", justify="right", style="deep_sky_blue1", no_wrap=True)
-    table.add_column("Python Version", justify="right", style="dark_green", no_wrap=True)
+    table.add_column("Python Version", justify="right", style="green4", no_wrap=True)
 
     for pkg in packages:
         table.add_row(f"{pkg.name}", f"{pkg.version}", f"{pkg.python}")

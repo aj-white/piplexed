@@ -19,7 +19,7 @@ def print_list_tree(packages: Iterable[PackageInfo]) -> None:
             "dark_orange bold",
         )
         version_info = Text("version - ", "white").append(f"{pkg.version}", "deep_sky_blue1")
-        python_info = Text("python - ", "white").append(cast(str, pkg.python), "dark_green")
+        python_info = Text("python - ", "white").append(cast(str, pkg.python), "green4")
         pkg_branch = tree.add(pkg_name)
         pkg_branch.add(version_info)
         pkg_branch.add(python_info)
