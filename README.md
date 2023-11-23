@@ -50,7 +50,25 @@ Outputs similar information to `pipx list`, albeit minus the names of the binari
 <img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG" width=300/>
 </p>
 
+
+```console
+piplexed list --table
+```
+
+An optional table flag can be passed for a more compact view
+
+<p>
+<img src=https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG width=300>
+</p>
+
+
+> [!IMPORTANT]
+> From v0.4.0 the table view will become the default view
+
 ### List outdated packages installed with pipx (no pre or dev release)
+
+
+
 
 ```console
 piplexed list --outdated

@@ -4,6 +4,7 @@
 
 - Minor docs fix for shell examples
 - Update python version colour in `piplexed list` to a lighter green.
+- Deprecation warning added as the table view will become the default in v0.4.0
 
 ## [0.2.0](https://github.com/aj-white/piplexed/compare/v0.1.2...v0.2.0)
 
