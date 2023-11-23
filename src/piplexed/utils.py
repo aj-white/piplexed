@@ -14,6 +14,9 @@ def future_deprecation_warning(*, reason: str, replacement: str | None, deprecat
         The version of piplexed that will contain this change.
     """
 
+    if replacement is None:
+        replacement = ""
+
     message_parts = (reason, f"This will happen in {deprecation_version}", replacement)
 
     message = ". ".join(message_parts)
