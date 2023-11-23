@@ -3,6 +3,8 @@
 ## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.2.0...HEAD)
 
 - Minor docs fix for shell examples
+- Update python version colour in `piplexed list` to a lighter green.
+
 ## [0.2.0](https://github.com/aj-white/piplexed/compare/v0.1.2...v0.2.0)
 
 ### Added
