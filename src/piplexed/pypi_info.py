@@ -3,10 +3,10 @@ from __future__ import annotations
 from collections.abc import Generator
 from pathlib import Path
 from typing import TypedDict
-from typing import cast
 
 from packaging.utils import NormalizedName
 from packaging.utils import canonicalize_name
+from packaging.version import InvalidVersion
 from packaging.version import Version
 from platformdirs import user_cache_path
 from pypi_simple import DistributionPackage
@@ -40,21 +40,16 @@ def get_pypi_versions(session: CachedSession, package_name: str, *, stable: bool
 
 
 def get_latest_version(packages: list[DistributionPackage], *, stable: bool) -> Version:
-    if stable:
-        latest_version = max(
-            pkg_vsn
-            for pkg in packages
-            if pkg.package_type == "sdist"
-            and not (pkg_vsn := Version(cast(str, pkg.version))).is_devrelease
-            and not pkg.is_yanked
-            and not pkg_vsn.is_prerelease
-        )
-    else:
-        latest_version = max(
-            Version(cast(str, pkg.version)) for pkg in packages if pkg.package_type == "sdist" and not pkg.is_yanked
-        )
-
-    return latest_version
+    versions: list[Version] = []
+    for pkg in packages:
+        if pkg.version is not None and pkg.package_type == "sdist" and not pkg.is_yanked:
+            try:
+                pkg_vsn = Version(pkg.version)
+            except InvalidVersion:
+                continue
+            if not pkg_vsn.is_prerelease or not stable:
+                versions.append(pkg_vsn)
+    return max(versions)
 
 
 def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageVersions]:
