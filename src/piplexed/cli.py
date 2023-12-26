@@ -7,7 +7,6 @@ from piplexed._print_table import print_list_table
 from piplexed._print_table import print_outdated_table
 from piplexed._print_tree import print_list_outdated
 from piplexed._print_tree import print_list_tree
-from piplexed.utils import future_deprecation_warning
 
 app = typer.Typer()
 
@@ -28,13 +27,7 @@ def list(
     ),
     table: bool = typer.Option(False, "--table", "-T", help="print output as a table"),
 ) -> None:
-    future_deprecation_warning(
-        reason="The table view will become the default option, "
-        "due to it being more clear and concise than the tree view. "
-        "There will be no need to pass '--table'",
-        replacement="To get the tree view in future versions, '--tree'/'-T' will need to be passed as options",
-        deprecation_version="v0.4.0",
-    )
+
     if outdated and is_prelease and table:
         print_outdated_table(piplexed.find_outdated_packages(stable=False))
     elif outdated and is_prelease:
