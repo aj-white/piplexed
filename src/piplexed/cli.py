@@ -27,7 +27,6 @@ def list(
     ),
     tree: bool = typer.Option(False, "--tree", "-T", help="print output as a tree (default is table)"),
 ) -> None:
-
     if outdated and is_prelease and tree:
         print_list_outdated(piplexed.find_outdated_packages(stable=False))
     elif outdated and is_prelease:
