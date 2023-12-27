@@ -1,8 +1,14 @@
 # Release Notes
 
-# Unreleased
+## Unreleased
+
+- Table is now the default option for `list` command, tree view still available via `--tree` option.
+
+
+## 0.3.0
 
 - 📝Minor docs fix for shell examples
+- 💄 Python version colour in `piplexed list` changed to a lighter green
 
 ## 0.2.0
 
