@@ -10,7 +10,7 @@ $ piplexed version --help
 
 ## piplexed list
 
-List all packages installed via pipx (output in tree format by default)
+List all packages installed via pipx (output in table format by default)
 ```shell
 $ piplexed list
 ```
@@ -28,11 +28,11 @@ Include pre-release or dev-releases when determining newer versions (use in conj
 $ piplexed list --outdated --pre
 ```
 
-### `--table` / `-T`
-Output as a table (takes up less space than the default tree)
+### `--tree` / `-T`
+Output as a rich tree (less useful if lots of packages)
 ```shell
-$ piplexed list --table
-$ piplexed list --outdated --table
+$ piplexed list --tree
+$ piplexed list --outdated --tree
 ```
 
 ## piplexed version

@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.3.0...HEAD)
 
+### Changed
+- Table is now the default option for `list` command, tree view available via `--tree` option.
+
 ## [0.3.0](https://github.com/aj-white/piplexed/compare/v0.2.0...v0.3.0)
 
 ### Changed
