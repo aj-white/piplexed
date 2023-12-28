@@ -47,8 +47,11 @@ piplexed list --outdated
 ```
 Output ignores prelease and dev releases by default.
 
-![]("https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed.gif")
-
+<p align="left">
+<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed.gif">
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed.gif"/>
+</a>
+</p>
 
 ### List outdated packages installed with pipx
 
