@@ -2,7 +2,10 @@
 
 ## Unreleased
 
+## 0.4.0
+
 - Table is now the default option for `list` command, tree view still available via `--tree` option.
+- Ignore PyPI packages whose version does not follow [PEP 440](https://peps.python.org/pep-0440/).
 
 
 ## 0.3.0

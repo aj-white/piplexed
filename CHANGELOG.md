@@ -2,8 +2,14 @@
 
 ## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.3.0...HEAD)
 
+## [0.4.0](https://github.com/aj-white/piplexed/compare/v0.3.0...v0.4.0)
+
 ### Changed
-- Table is now the default option for `list` command, tree view available via `--tree` option.
+- Table is now the default option for `list` command, tree view available via `--tree` option. #40
+- ReadME and documention updated reflecting change to table default.
+
+### Added
+- Ignore PyPI packages whose version does not follow [PEP 440](https://peps.python.org/pep-0440/)
 
 ## [0.3.0](https://github.com/aj-white/piplexed/compare/v0.2.0...v0.3.0)
 
