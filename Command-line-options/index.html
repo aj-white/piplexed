@@ -317,8 +317,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-table-t" class="md-nav__link">
-    --table / -T
+  <a href="#-tree-t" class="md-nav__link">
+    --tree / -T
   </a>
   
 </li>
@@ -452,8 +452,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#-table-t" class="md-nav__link">
-    --table / -T
+  <a href="#-tree-t" class="md-nav__link">
+    --tree / -T
   </a>
   
 </li>
@@ -495,7 +495,7 @@
 $ piplexed version --help
 </code></pre>
 <h2 id="piplexed-list">piplexed list</h2>
-<p>List all packages installed via pipx (output in tree format by default)</p>
+<p>List all packages installed via pipx (output in table format by default)</p>
 <pre><code class="language-shell">$ piplexed list
 </code></pre>
 <h3 id="-outdated-o"><code>--outdated</code> / <code>-O</code></h3>
@@ -506,10 +506,10 @@ $ piplexed version --help
 <p>Include pre-release or dev-releases when determining newer versions (use in conjunction with <code>--outdated</code>)</p>
 <pre><code class="language-shell">$ piplexed list --outdated --pre
 </code></pre>
-<h3 id="-table-t"><code>--table</code> / <code>-T</code></h3>
-<p>Output as a table (takes up less space than the default tree)</p>
-<pre><code class="language-shell">$ piplexed list --table
-$ piplexed list --outdated --table
+<h3 id="-tree-t"><code>--tree</code> / <code>-T</code></h3>
+<p>Output as a rich tree (less useful if lots of packages)</p>
+<pre><code class="language-shell">$ piplexed list --tree
+$ piplexed list --outdated --tree
 </code></pre>
 <h2 id="piplexed-version">piplexed version</h2>
 <p>Show version</p>

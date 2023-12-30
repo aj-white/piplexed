@@ -506,7 +506,7 @@
 <p><strong>Source Code</strong>: <a href="https://github.com/aj-white/piplexed">https://github.com/aj-white/piplexed</a></p>
 <hr />
 <h2 id="overview">Overview</h2>
-<p><strong>Piplexed</strong> is a command line tool to identify outdated python packages, installed from <a href="https://pypi.org/"><strong>PyPI</strong></a>, via <a href="https://pypa.github.io/pipx/"><strong>pipx</strong></a>. It displays it's output as a nice <a href="https://github.com/Textualize/rich"><strong>rich</strong></a> printed tree by default, with an alternative table output if needed.</p>
+<p><strong>Piplexed</strong> is a command line tool to identify outdated python packages, installed from <a href="https://pypi.org/"><strong>PyPI</strong></a>, via <a href="https://pypa.github.io/pipx/"><strong>pipx</strong></a>. It displays it's output as a <a href="https://github.com/Textualize/rich"><strong>rich</strong></a> printed table by default, with an alternative tree output available if desired.</p>
 <h3 id="what-is-pipx">What is pipx ?</h3>
 <p><strong>Pipx</strong> is a tool to help you install applications written in Python, into isolated environments with the ability to run them globally with no environment activation necessary.</p>
 <h2 id="requirements">Requirements</h2>
@@ -528,31 +528,6 @@ If this happens you may need to change the code page by typing <code>chcp 65001<
 <pre><code class="language-shell">$ pipx run -- piplexed list --outdated
 </code></pre>
 <h2 id="basic-usage">Basic Usage</h2>
-<p>Show the installed package version and python version of the virtual environment of packages installed with <strong>pipx</strong>.
-(<em>Similar to the <code>pipx list</code> command</em>).</p>
-<pre><code class="language-shell">$ piplexed list
-</code></pre>
-<p align="center">
-<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG">
-<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG"/>
-</a>
-</p>
-
-<p>If you prefer there is a more compact table view option, which is useful if there are lots of installed packages.</p>
-<pre><code class="language-shell">$ piplexed list --table
-</code></pre>
-<p align="center">
-<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG">
-<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG"/>
-</a>
-</p>
-
-<div class="admonition warning">
-<p class="admonition-title">Deprecation Warning</p>
-<p>The table view will become the default view from v0.4.0. This is because it provides an easier to read,
-compact output. The tree view will still be available but the options <code>--tree</code> / <code>-T</code> will need to be passed
-on the command line </p>
-</div>
 <p>Show the installed package version and the latest PyPI version, excluding pre-release and dev-release versions.</p>
 <pre><code class="language-shell">$ piplexed list --outdated
 </code></pre>
@@ -568,6 +543,25 @@ on the command line </p>
 <p align="center">
 <a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated-pre.PNG">
 <img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-outdated-pre.PNG" width=300/>
+</a>
+</p>
+
+<p>Show the installed package version and python version of the virtual environment of packages installed with <strong>pipx</strong>.
+(<em>Similar to the <code>pipx list</code> command, without the need to go out the internet, which the <code>pipx list</code> command does</em>).</p>
+<pre><code class="language-shell">$ piplexed list
+</code></pre>
+<p align="center">
+<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG">
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list-table.PNG"/>
+</a>
+</p>
+
+<p>If you prefer there is also a tree view option.</p>
+<pre><code class="language-shell">$ piplexed list --tree
+</code></pre>
+<p align="center">
+<a href="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG">
+<img src="https://github.com/aj-white/piplexed/raw/main/docs/img/piplexed-list.PNG"/>
 </a>
 </p>
 
