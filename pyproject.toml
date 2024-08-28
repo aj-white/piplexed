@@ -50,6 +50,8 @@ line-length = 120
 [tool.ruff]
 target-version = "py311"
 line-length = 120
+
+[tool.ruff.lint]
 select = [
   "A",
   "ARG",
@@ -80,23 +82,28 @@ ignore = [
   "FBT003",
   # Ignore checks for possible passwords and asserts
   "S101", "S105", "S106", "S107",
-  # Ignore complexity
-  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+  # Ignore complexity and formatting conflicts
+  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915", "COM812", "ISC001"
 ]
 unfixable = [
   # Don't touch unused imports
   "F401",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
 known-first-party = ["piplexed"]
 
-[tool.ruff.flake8-bugbear]
+[tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["typer.Option"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/piplexed/cli.py" = ["FBT001", "A001"]  # typer uses booleans in CLI args
+
+[tool.ruff.format]
+quote-style = "double"
+skip-magic-trailing-comma = false
+docstring-code-format = false
 
 [tool.coverage.run]
 branch = true

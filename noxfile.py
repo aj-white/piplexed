@@ -33,8 +33,8 @@ def coverage_report(session):
 def lint(session):
     session.run("python", "-m", "pip", "install", "-U", "pip")
     session.install(".", "-r", LINT_DEPENDENCIES)
-    session.run("black", "src", "--check")
-    session.run("ruff", ".")
+    session.run("ruff", "format", "src", "--check")
+    session.run("ruff", "check", ".")
     session.run("mypy", "src")
 
 
