@@ -1,18 +1,39 @@
 from __future__ import annotations
 
 import json
-import os
+import platform
 from dataclasses import dataclass
 from pathlib import Path
 
 from packaging.utils import NormalizedName
 from packaging.utils import canonicalize_name
 from packaging.version import Version
+from platformdirs import user_data_path
 
-DEFAULT_PIPX_HOME = Path.home() / ".local/pipx"
-DEFAULT_PIPX_BIN_DIR = Path.home() / ".local/bin"
-PIPX_HOME = Path(os.environ.get("PIPX_HOME", DEFAULT_PIPX_HOME)).resolve()
-PIPX_LOCAL_VENVS = PIPX_HOME / "venvs"
+if platform.system() == "Linux":
+    DEFAULT_PIPX_HOME = Path(user_data_path("pipx"))
+    FALLBACK_PIPX_HOMES = [Path.home() / ".local/pipx"]
+elif platform.system() == "Windows":
+    DEFAULT_PIPX_HOME = Path.home() / "pipx"
+    FALLBACK_PIPX_HOMES = [Path.home() / ".local/pipx", Path(user_data_path("pipx"))]
+else:
+    DEFAULT_PIPX_HOME = Path.home() / ".local/pipx"
+    FALLBACK_PIPX_HOMES = [Path(user_data_path("pipx"))]
+
+
+def get_local_venv() -> Path | None:
+    if DEFAULT_PIPX_HOME.exists():
+        return DEFAULT_PIPX_HOME / "venvs"
+
+    for fallback_dir in FALLBACK_PIPX_HOMES:
+        if fallback_dir.exists():
+            return fallback_dir / "venvs"
+
+    return None
+
+
+# PIPX_HOME = Path(os.environ.get("PIPX_HOME", DEFAULT_PIPX_HOME)).resolve()
+PIPX_LOCAL_VENVS: Path | None = get_local_venv()
 
 
 @dataclass
@@ -22,8 +43,11 @@ class PackageInfo:
     python: str | None = None
 
 
-def get_pipx_metadata(venv_dir: Path = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
+def get_pipx_metadata(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
     venvs = []
+    if venv_dir is None:
+        msg = "Unable to find pipx venv installation location"
+        raise FileNotFoundError(msg)
     for env in venv_dir.iterdir():
         for item in env.iterdir():
             if item.suffix == ".json":  # pragma: no branch
