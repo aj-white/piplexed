@@ -21,4 +21,4 @@ def future_deprecation_warning(*, reason: str, replacement: str | None, deprecat
 
     message = ". ".join(message_parts)
 
-    warnings.warn(message, stacklevel=2, category=FutureWarning)
+    warnings.warn(message.rstrip(), stacklevel=2, category=FutureWarning)
