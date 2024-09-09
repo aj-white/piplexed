@@ -45,7 +45,7 @@ class PackageInfo:
 
 def get_pipx_metadata(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
     venvs = []
-    if venv_dir is None:
+    if venv_dir is None or not venv_dir.exists():
         msg = "Unable to find pipx venv installation location"
         raise FileNotFoundError(msg)
     for env in venv_dir.iterdir():

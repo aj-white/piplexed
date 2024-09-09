@@ -1,76 +1,126 @@
+import json
+from typing import Any
+
+import pytest
 from packaging.version import Version
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
 
-TEST_PIPX_PYPI_METADATA = """{
+PIPX_METADATA_VERSIONS = [None, "0.1", "0.2", "0.3", "0.4", "0.5"]
+
+# Metadata changes for 0.1 -> 0.3 and 0.4 -> 0.5 were at package level
+MOCK_BASE_PIPX_METADATA: dict[str, Any] = {
+    "main_package": None,
+    "python_version": None,
+    "venv_args": [],
     "injected_packages": {},
-    "main_package": {
-        "app_paths": [
-            {
-                "__Path__": "C:\\\\path\\\\to\\\\test.exe",
-                "__type__": "Path"
-            }
-        ],
-        "app_paths_of_dependencies": {},
-        "apps": [
-            "test.exe"
-        ],
-        "apps_of_dependencies": [],
-        "include_apps": true,
-        "include_dependencies": false,
-        "package": "Testy_McTestFace",
-        "package_or_url": "Testy_McTestFace",
-        "package_version": "23.1.0",
-        "pip_args": [],
-        "suffix": ""
-    },
-    "pipx_metadata_version": "0.2",
-    "python_version": "Python 3.11.2",
-    "venv_args": []
-}"""
+    "pipx_metadata_version": "0.1",
+}
 
-TEST_PIPX_LOCAL_METADATA = """{
-    "injected_packages": {},
-    "main_package": {
-        "app_paths": [
-            {
-                "__Path__": "C:\\\\path\\\\to\\\\test.exe",
-                "__type__": "Path"
-            }
-        ],
-        "app_paths_of_dependencies": {},
-        "apps": [
-            "local.exe"
-        ],
-        "apps_of_dependencies": [],
-        "include_apps": true,
-        "include_dependencies": false,
-        "package": "Local_Package",
-        "package_or_url": "path/to/local/wheel",
-        "package_version": "23.1.0",
-        "pip_args": [],
-        "suffix": ""
-    },
-    "pipx_metadata_version": "0.3",
-    "python_version": "Python 3.11.2",
-    "venv_args": []
-}"""
+MOCK_PIPX_METADATA_0_4: dict[str, Any] = MOCK_BASE_PIPX_METADATA | {"source_interpreter": None}
+
+MOCK_PACKAGE_DATA_0_1: dict[str, Any] = {
+    "package": None,
+    "package_or_url": None,
+    "pip_args": [],
+    "include_dependencies": False,
+    "include_apps": True,
+    "apps": [],
+    "app_paths": [],
+    "apps_of_dependencies": [],
+    "app_paths_of_dependencies": {},
+    "package_version": "",
+}
+
+MOCK_PACKAGE_DATA_0_2 = MOCK_PACKAGE_DATA_0_1 | {"suffix": ""}
+
+MOCK_PACKAGE_DATA_0_3_and_0_4 = MOCK_PACKAGE_DATA_0_2 | {
+    "man_pages": [],
+    "man_paths": [],
+    "man_pages_of_dependencies": [],
+    "man_paths_of_dependencies": {},
+}
+
+MOCK_PACKAGE_DATA_0_5 = MOCK_PACKAGE_DATA_0_3_and_0_4 | {"pinned": False}
 
 
-def test_get_pipx_metadata(tmp_path):
+def mock_metadata(metadata_version: str, pypi_package: bool = True) -> dict[str, Any]:
+    if metadata_version in ["0.1", "0.2", "0.3"]:
+        metadata_template = MOCK_BASE_PIPX_METADATA
+    elif metadata_version in ["0.4", "0.5"]:
+        metadata_template = MOCK_PIPX_METADATA_0_4
+    else:
+        err_msg = f"Internal Test Error: Unknown metadata_version={metadata_version}"
+        raise Exception(err_msg)
+
+    if metadata_version == "0.1":
+        package_template = MOCK_PACKAGE_DATA_0_1
+    elif metadata_version == "0.2":
+        package_template = MOCK_PACKAGE_DATA_0_2
+    elif metadata_version in ["0.3", "0.4"]:
+        package_template = MOCK_PACKAGE_DATA_0_3_and_0_4
+    elif metadata_version == "0.5":
+        package_template = MOCK_PACKAGE_DATA_0_5
+    else:
+        err_msg = f"Internal Test Error: Unknown metadata_version={metadata_version}"
+        raise Exception(err_msg)
+
+    if pypi_package:
+        package_template["package"] = "Testy_McTestFace"
+        package_template["package_or_url"] = "Testy_McTestFace"
+    else:
+        package_template["package"] = "Local_Package"
+        package_template["package_or_url"] = "path/to/local/wheel"
+
+    package_template["package_version"] = "23.1.0"
+    metadata_template["pipx_metadata_version"] = metadata_version
+    metadata_template["python_version"] = "Python 3.11.2"
+    metadata_template["main_package"] = package_template
+
+    return metadata_template
+
+
+@pytest.fixture
+def venv_dir_test_setup(tmp_path):
     env_dir = tmp_path / "venvs"
     env_dir.mkdir()
     pypi_package = env_dir / "pypi_package"
     pypi_package.mkdir()
-    pypi_test_json = pypi_package / "test.json"
-    pypi_test_json.write_text(TEST_PIPX_PYPI_METADATA)
-
     local_package = env_dir / "local_package"
     local_package.mkdir()
-    local_test_json = local_package / "test.json"
-    local_test_json.write_text(TEST_PIPX_LOCAL_METADATA)
 
-    assert get_pipx_metadata(env_dir) == [
-        PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2"),
-    ]
+    return env_dir
+
+
+@pytest.mark.parametrize("pipx_metadata_version", ("0.1", "0.2", "0.3", "0.4", "0.5"))
+def test_pipx_metadata(venv_dir_test_setup, pipx_metadata_version):
+    pypi_json = venv_dir_test_setup / "pypi_package" / "test.json"
+    local_json = venv_dir_test_setup / "local_package" / "test.json"
+
+    expected = [PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2")]
+
+    with open(pypi_json, "w") as f:
+        pipx_metadata = mock_metadata(metadata_version=pipx_metadata_version)
+        json.dump(pipx_metadata, f)
+
+    with open(local_json, "w") as f:
+        pipx_metadata = mock_metadata(metadata_version=pipx_metadata_version, pypi_package=False)
+        json.dump(pipx_metadata, f)
+
+    assert get_pipx_metadata(venv_dir_test_setup) == expected
+
+
+def test_venv_dir_is_none():
+    with pytest.raises(FileNotFoundError) as execinfo:
+        get_pipx_metadata(venv_dir=None)
+
+    assert str(execinfo.value) == "Unable to find pipx venv installation location"
+
+
+def test_venv_dir_not_exists(tmp_path):
+    non_existent_path = tmp_path / "joker"
+    with pytest.raises(FileNotFoundError) as execinfo:
+        get_pipx_metadata(venv_dir=non_existent_path)
+
+    assert str(execinfo.value) == "Unable to find pipx venv installation location"
