@@ -59,7 +59,7 @@ def get_pipx_metadata(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageI
         raise FileNotFoundError(msg)
     for env in venv_dir.iterdir():
         for item in env.iterdir():
-            if item.suffix == ".json":  # pragma: no branch
+            if item.name == "pipx_metadata.json":  # pragma: no branch
                 with open(item) as f:
                     data = json.load(f)
                     # packages installed from pypi have the same package and package_or_url
