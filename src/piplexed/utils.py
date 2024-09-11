@@ -1,7 +1,8 @@
 import warnings
+from typing import Optional
 
 
-def future_deprecation_warning(*, reason: str, replacement: str | None, deprecation_version: str) -> None:
+def future_deprecation_warning(*, reason: str, replacement: Optional[str], deprecation_version: str) -> None:  # noqa: UP007
     """Helper function to more cleanly inform users of upcoming deprecations
 
     Parameters
@@ -21,4 +22,4 @@ def future_deprecation_warning(*, reason: str, replacement: str | None, deprecat
 
     message = ". ".join(message_parts)
 
-    warnings.warn(message, stacklevel=2, category=FutureWarning)
+    warnings.warn(message.rstrip(), stacklevel=2, category=FutureWarning)
