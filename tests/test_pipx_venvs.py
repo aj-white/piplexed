@@ -10,6 +10,7 @@ import pytest
 from packaging.version import Version
 
 from piplexed.pipx_venvs import PackageInfo
+from piplexed.pipx_venvs import get_local_venv
 from piplexed.pipx_venvs import get_pipx_metadata
 from piplexed.pipx_venvs import pipx_home_paths_for_os
 
@@ -163,3 +164,65 @@ def test_pipx_home_paths_for_os_other(mock_user_data_path):  # noqa: ARG001
     default, fallback = pipx_home_paths_for_os("Darwin")
     assert str(default) == os.path.join(str(Path.home()), ".local", "pipx")
     assert [str(p) for p in fallback] == [os.path.join("mock", "user", "data", "pipx")]
+
+
+@pytest.fixture
+def mock_pipx_homes(monkeypatch, tmp_path):
+    default_home = tmp_path / "default"
+    fallback_homes = [tmp_path / "fallback1", tmp_path / "fallback2"]
+
+    monkeypatch.setattr("piplexed.pipx_venvs.DEFAULT_PIPX_HOME", default_home)
+    monkeypatch.setattr("piplexed.pipx_venvs.FALLBACK_PIPX_HOMES", fallback_homes)
+
+    return (default_home, fallback_homes)
+
+
+def test_default_pipx_home_exists(mock_pipx_homes):
+    default_home, _ = mock_pipx_homes
+    default_home.mkdir()
+
+    result = get_local_venv()
+    assert result == default_home / "venvs"
+
+
+def test_default_pipx_home_not_exists_fallback1_exists(mock_pipx_homes):
+    _, fallbacks = mock_pipx_homes
+    fallback_1 = fallbacks[0]
+    fallback_1.mkdir()
+    result = get_local_venv()
+    assert result == fallback_1 / "venvs"
+
+
+def test_default_pipx_home_not_exists_fallback2_exists(mock_pipx_homes):
+    _, fallbacks = mock_pipx_homes
+    fallback_2 = fallbacks[1]
+    fallback_2.mkdir()
+    result = get_local_venv()
+    assert result == fallback_2 / "venvs"
+
+
+def test_default_pipx_home_not_exists_fallback1_and_fallback2_exists(mock_pipx_homes):
+    _, fallbacks = mock_pipx_homes
+    fallback_1 = fallbacks[0]
+    fallback_2 = fallbacks[1]
+    fallback_1.mkdir()
+    fallback_2.mkdir()
+    result = get_local_venv()
+    assert result == fallback_1 / "venvs"
+
+
+def test_default_pipx_home_exists_and_fallback_exists(mock_pipx_homes):
+    default, fallbacks = mock_pipx_homes
+    fallback_1 = fallbacks[0]
+    fallback_2 = fallbacks[1]
+    default.mkdir()
+    fallback_1.mkdir()
+    fallback_2.mkdir()
+    result = get_local_venv()
+    assert result == default / "venvs"
+
+
+def test_default_pipx_home_not_exists_and_fallback_not_exists(mock_pipx_homes):
+    default, fallbacks = mock_pipx_homes
+    result = get_local_venv()
+    assert result is None
