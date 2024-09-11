@@ -10,15 +10,24 @@ from packaging.utils import canonicalize_name
 from packaging.version import Version
 from platformdirs import user_data_path
 
-if platform.system() == "Linux":
-    DEFAULT_PIPX_HOME = Path(user_data_path("pipx"))
-    FALLBACK_PIPX_HOMES = [Path.home() / ".local/pipx"]
-elif platform.system() == "Windows":
-    DEFAULT_PIPX_HOME = Path.home() / "pipx"
-    FALLBACK_PIPX_HOMES = [Path.home() / ".local/pipx", Path(user_data_path("pipx"))]
-else:
-    DEFAULT_PIPX_HOME = Path.home() / ".local/pipx"
-    FALLBACK_PIPX_HOMES = [Path(user_data_path("pipx"))]
+OS_PLATFORM = platform.system()
+
+
+def pipx_home_paths_for_os(platform_: str) -> tuple[Path, list[Path]]:
+    if platform_ == "Linux":
+        default_pipx_home = Path(user_data_path("pipx"))
+        fallback_pipx_homes = [Path.home() / ".local/pipx"]
+    elif platform_ == "Windows":
+        default_pipx_home = Path.home() / "pipx"
+        fallback_pipx_homes = [Path.home() / ".local/pipx", Path(user_data_path("pipx"))]
+    else:
+        default_pipx_home = Path.home() / ".local/pipx"
+        fallback_pipx_homes = [Path(user_data_path("pipx"))]
+
+    return (default_pipx_home, fallback_pipx_homes)
+
+
+DEFAULT_PIPX_HOME, FALLBACK_PIPX_HOMES = pipx_home_paths_for_os(OS_PLATFORM)
 
 
 def get_local_venv() -> Path | None:

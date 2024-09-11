@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 import json
+import os
+from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 import pytest
 from packaging.version import Version
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
+from piplexed.pipx_venvs import pipx_home_paths_for_os
 
 PIPX_METADATA_VERSIONS = [None, "0.1", "0.2", "0.3", "0.4", "0.5"]
 
@@ -129,3 +133,33 @@ def test_venv_dir_not_exists(tmp_path):
         get_pipx_metadata(venv_dir=non_existent_path)
 
     assert str(execinfo.value) == "Unable to find pipx venv installation location"
+
+
+@pytest.fixture
+def mock_user_data_path():
+    with patch("piplexed.pipx_venvs.user_data_path") as mock_user_data:
+        mock_user_data.return_value = "mock/user/data/pipx"
+        yield mock_user_data
+
+
+def test_pipx_home_paths_for_os_linux(mock_user_data_path):  # noqa: ARG001
+    default, fallback = pipx_home_paths_for_os("Linux")
+    assert str(default) == os.path.join("mock", "user", "data", "pipx")
+    assert [str(p) for p in fallback] == [
+        os.path.join(str(Path.home()), ".local", "pipx"),
+    ]
+
+
+def test_pipx_home_paths_for_os_windows(mock_user_data_path):  # noqa: ARG001
+    default, fallback = pipx_home_paths_for_os("Windows")
+    assert str(default) == os.path.join(str(Path.home()), "pipx")
+    assert [str(p) for p in fallback] == [
+        os.path.join(str(Path.home()), ".local", "pipx"),
+        os.path.join("mock", "user", "data", "pipx"),
+    ]
+
+
+def test_pipx_home_paths_for_os_other(mock_user_data_path):  # noqa: ARG001
+    default, fallback = pipx_home_paths_for_os("Darwin")
+    assert str(default) == os.path.join(str(Path.home()), ".local", "pipx")
+    assert [str(p) for p in fallback] == [os.path.join("mock", "user", "data", "pipx")]
