@@ -105,8 +105,8 @@ def venv_dir_test_setup(tmp_path):
 
 @pytest.mark.parametrize("pipx_metadata_version", ("0.1", "0.2", "0.3", "0.4", "0.5"))
 def test_pipx_metadata(venv_dir_test_setup, pipx_metadata_version):
-    pypi_json = venv_dir_test_setup / "pypi_package" / "test.json"
-    local_json = venv_dir_test_setup / "local_package" / "test.json"
+    pypi_json = venv_dir_test_setup / "pypi_package" / "pipx_metadata.json"
+    local_json = venv_dir_test_setup / "local_package" / "pipx_metadata.json"
 
     expected = [PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2")]
 
@@ -117,6 +117,23 @@ def test_pipx_metadata(venv_dir_test_setup, pipx_metadata_version):
     with open(local_json, "w") as f:
         pipx_metadata = mock_metadata(metadata_version=pipx_metadata_version, pypi_package=False)
         json.dump(pipx_metadata, f)
+
+    assert get_pipx_metadata(venv_dir_test_setup) == expected
+
+
+def test_multiple_json_files_in_venv(venv_dir_test_setup):
+    pypi_json = venv_dir_test_setup / "pypi_package" / "pipx_metadata.json"
+    extra_json = venv_dir_test_setup / "pypi_package" / "schema.json"
+
+    expected = [PackageInfo(name="testy-mctestface", version=Version("23.1.0"), python="3.11.2")]
+
+    with open(pypi_json, "w") as f:
+        pipx_metadata = mock_metadata(metadata_version="0.5")
+        json.dump(pipx_metadata, f)
+
+    with open(extra_json, "w") as f:
+        extra_data = {"test": "test extra data"}
+        json.dump(extra_data, f)
 
     assert get_pipx_metadata(venv_dir_test_setup) == expected
 
