@@ -9,12 +9,12 @@ from unittest.mock import patch
 import pytest
 from packaging.version import Version
 
+from piplexed.pipx_venvs import PIPX_METADATA_VERSIONS
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_local_venv
 from piplexed.pipx_venvs import get_pipx_metadata
+from piplexed.pipx_venvs import is_metadata_version_valid
 from piplexed.pipx_venvs import pipx_home_paths_for_os
-
-PIPX_METADATA_VERSIONS = [None, "0.1", "0.2", "0.3", "0.4", "0.5"]
 
 # Metadata changes for 0.1 -> 0.3 and 0.4 -> 0.5 were at package level
 MOCK_BASE_PIPX_METADATA: dict[str, Any] = {
@@ -243,3 +243,32 @@ def test_default_pipx_home_not_exists_and_fallback_not_exists(mock_pipx_homes):
     default, fallbacks = mock_pipx_homes
     result = get_local_venv()
     assert result is None
+
+
+@pytest.mark.parametrize(
+    "metadata_version, expected",
+    (
+        ("0.1", True),
+        ("0.2", True),
+        ("0.3", True),
+        ("0.4", True),
+        ("0.5", True),
+        ("0.6", False),
+        ("", False),
+        (None, False),
+    ),
+)
+def test_pipx_metaversion_validation(metadata_version, expected):
+    assert is_metadata_version_valid(metadata_version, PIPX_METADATA_VERSIONS) == expected
+
+
+def test_pipx_metadata_warning(venv_dir_test_setup):
+    pypi_json = venv_dir_test_setup / "pypi_package" / "pipx_metadata.json"
+
+    with open(pypi_json, "w") as f:
+        pipx_metadata = mock_metadata(metadata_version="0.5")
+        pipx_metadata["pipx_metadata_version"] = None
+        json.dump(pipx_metadata, f)
+
+    with pytest.warns(UserWarning):
+        get_pipx_metadata(venv_dir_test_setup)
