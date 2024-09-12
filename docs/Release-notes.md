@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.5.0
+- ✅ Testing for all pipx metadata versions has been added
+- 👽 How pipx home is located updated to bring into line with [pipx](https://github.com/pypa/pipx)
+- 🐛 Handle multiple json files in pipx venv directory.
+
 ## 0.4.0
 
 - Table is now the default option for `list` command, tree view still available via `--tree` option.

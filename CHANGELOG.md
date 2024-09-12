@@ -1,6 +1,18 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.3.0...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.5.0...HEAD)
+
+## [0.5.0](https://github.com/aj-white/piplexed/compare/v0.4.0...v0.5.0)
+
+### Added
+- Test against current and previous pipx metadata versions
+
+### Changed
+- Updated how pipx home is located, now in line with `pipx` package as it is dependent on operating system
+- Warn user if pipx metadata version is not tested against.
+
+### Fixed
+- Handle when multiple json files are present in pipx venv folder
 
 ## [0.4.0](https://github.com/aj-white/piplexed/compare/v0.3.0...v0.4.0)
 
