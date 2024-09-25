@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
+from contextlib import ExitStack
 from pathlib import Path
 
 from packaging.version import InvalidVersion
@@ -51,15 +52,21 @@ def get_pypi_versions(client: PyPISimple, package: PackageInfo, stable: bool) ->
 
 def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageInfo]:
     venvs: list[PackageInfo] = get_pipx_metadata()
-    session = CachedSession(str(cache_dir), backend="sqlite", expire_after=360)
 
-    with PyPISimple(session=session) as client:
-        with ThreadPoolExecutor() as executor:
-            results = [executor.submit(get_pypi_versions, client, pkg, stable) for pkg in venvs]
+    with ExitStack() as stack:
+        session = stack.enter_context(CachedSession(str(cache_dir), backend="sqlite", expire_after=360))
+        session.cache.delete(expired=True)
 
-            updates = [
-                newer_pkg for future in as_completed(results) if (newer_pkg := future.result()).newer_pypi_version()
-            ]
+        client = stack.enter_context(PyPISimple(session=session))
 
-    session.cache.delete(expired=True)
+        executor = stack.enter_context(ThreadPoolExecutor(max_workers=4))
+
+        results = [executor.submit(get_pypi_versions, client, pkg, stable) for pkg in venvs]
+
+        updates = []
+        for future in as_completed(results):
+            result = future.result()
+            if result.newer_pypi_version():
+                updates.append(result)
+
     return sorted(updates, key=lambda x: x.name)
