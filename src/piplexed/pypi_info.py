@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Generator
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import as_completed
 from pathlib import Path
-from typing import TypedDict
 
-from packaging.utils import NormalizedName
-from packaging.utils import canonicalize_name
 from packaging.version import InvalidVersion
 from packaging.version import Version
 from platformdirs import user_cache_path
@@ -20,28 +18,14 @@ from piplexed.version import VERSION
 DEFAULT_CACHE: Path = user_cache_path(appname="piplexed", version=VERSION) / "pypi_cache.sqlite"
 
 
-class PackageVersions(TypedDict):
-    package: NormalizedName
-    pipx: Version
-    pypi: Version
+def pypi_package_info(client: PyPISimple, package_name: str) -> list[DistributionPackage]:
+    project_page = client.get_project_page(package_name)
+    return project_page.packages
 
 
-def get_pypi_versions(session: CachedSession, package_name: str, *, stable: bool) -> Generator[PackageInfo, None, None]:
-    with PyPISimple(session=session) as client:
-        package_page = client.get_project_page(package_name)
-        canonicalized_pkg_name = canonicalize_name(package_page.project)
-
-        # use max(Version) instead of reversing order of package_page as recommended in PEP 700
-        # https://peps.python.org/pep-0700/
-
-        latest_version = get_latest_version(package_page.packages, stable=stable)
-
-        yield PackageInfo(name=canonicalized_pkg_name, version=latest_version)
-
-
-def get_latest_version(packages: list[DistributionPackage], *, stable: bool) -> Version:
+def latest_pypi_version(pkg_versions: list[DistributionPackage], stable: bool) -> Version:  # noqa: FBT001
     versions: list[Version] = []
-    for pkg in packages:
+    for pkg in pkg_versions:
         if pkg.version is not None and pkg.package_type == "sdist" and not pkg.is_yanked:
             try:
                 pkg_vsn = Version(pkg.version)
@@ -49,18 +33,33 @@ def get_latest_version(packages: list[DistributionPackage], *, stable: bool) -> 
                 continue
             if not pkg_vsn.is_prerelease or not stable:
                 versions.append(pkg_vsn)
+
+    # use max(Version) instead of reversing order of package_page as recommended in PEP 700
+    # https://peps.python.org/pep-0700/
     return max(versions)
 
 
-def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageVersions]:
-    updates: list[PackageVersions] = []
-    venvs = get_pipx_metadata()
+def get_pypi_versions(client: PyPISimple, package: PackageInfo, stable: bool) -> PackageInfo:  # noqa: FBT001
+    pypi_versions: list[DistributionPackage] = pypi_package_info(client=client, package_name=package.name)
+
+    latest_version = latest_pypi_version(pypi_versions, stable=stable)
+
+    package.latest_pypi_version = latest_version
+
+    return package
+
+
+def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageInfo]:
+    venvs: list[PackageInfo] = get_pipx_metadata()
     session = CachedSession(str(cache_dir), backend="sqlite", expire_after=360)
-    for pkg in venvs:
-        for pypi_release in get_pypi_versions(session, pkg.name, stable=stable):
-            if pypi_release.version > pkg.version:
-                updates.append({"package": pkg.name, "pipx": pkg.version, "pypi": pypi_release.version})
-                break
+
+    with PyPISimple(session=session) as client:
+        with ThreadPoolExecutor() as executor:
+            results = [executor.submit(get_pypi_versions, client, pkg, stable) for pkg in venvs]
+
+            updates = [
+                newer_pkg for future in as_completed(results) if (newer_pkg := future.result()).newer_pypi_version()
+            ]
 
     session.cache.delete(expired=True)
-    return updates
+    return sorted(updates, key=lambda x: x.name)

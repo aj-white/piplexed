@@ -7,7 +7,6 @@ from rich.table import Table
 from rich.text import Text
 
 from piplexed.pipx_venvs import PackageInfo
-from piplexed.pypi_info import PackageVersions
 
 
 def print_list_table(packages: Iterable[PackageInfo]) -> None:
@@ -22,17 +21,17 @@ def print_list_table(packages: Iterable[PackageInfo]) -> None:
     rich_print(table)
 
 
-def print_outdated_table(package_data: Iterable[PackageVersions]) -> None:
+def print_outdated_table(package_data: Iterable[PackageInfo]) -> None:
     table = Table(title="Pip❌ Outdated Packages")
     table.add_column("Package Name", justify="right", style="dark_orange", no_wrap=True)
     table.add_column("Pipx Version", justify="right", style="deep_sky_blue1", no_wrap=True)
     table.add_column("PyPI Version", justify="right", style="red3", no_wrap=True)
 
     for pkg in package_data:
-        pypi_info = Text(f"{pkg['pypi']}", "green1")
-        if pkg["pypi"].is_prerelease or pkg["pypi"].is_devrelease:
+        pypi_info = Text(f"{pkg.latest_pypi_version}", "green1")
+        if pkg.latest_pypi_version is not None and pkg.latest_pypi_version.is_prerelease:
             pypi_info.append(" ⚠", "bright_yellow")
 
-        table.add_row(pkg["package"], f"{pkg['pipx']}", pypi_info)
+        table.add_row(pkg.name, f"{pkg.version}", pypi_info)
 
     rich_print(table)

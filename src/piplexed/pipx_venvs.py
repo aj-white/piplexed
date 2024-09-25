@@ -52,6 +52,13 @@ class PackageInfo:
     name: NormalizedName
     version: Version
     python: str | None = None
+    latest_pypi_version: Version | None = None
+
+    def newer_pypi_version(self) -> bool:
+        if self.latest_pypi_version is not None:
+            return self.latest_pypi_version > self.version
+        else:
+            return False
 
 
 def is_metadata_version_valid(metadata_version: str, pipx_metadata_vsn: list[str] = PIPX_METADATA_VERSIONS) -> bool:
@@ -84,4 +91,5 @@ def get_pipx_metadata(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageI
                             python=data["python_version"].split()[-1],
                         )
                         venvs.append(pkg_data)
+
     return venvs
