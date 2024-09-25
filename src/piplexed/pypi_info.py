@@ -11,6 +11,11 @@ from platformdirs import user_cache_path
 from pypi_simple import DistributionPackage
 from pypi_simple import PyPISimple
 from requests_cache import CachedSession
+from rich.progress import BarColumn
+from rich.progress import Progress
+from rich.progress import TaskProgressColumn
+from rich.progress import TextColumn
+from rich.progress import TimeRemainingColumn
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
@@ -58,6 +63,16 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
         session.cache.delete(expired=True)
 
         client = stack.enter_context(PyPISimple(session=session))
+        progress_bar = Progress(
+            TextColumn("[progress.description]{task.description}"),
+            BarColumn(),
+            TaskProgressColumn(),
+            TimeRemainingColumn(),
+            transient=True,
+        )
+
+        stack.enter_context(progress_bar)
+        task = progress_bar.add_task("[red]Getting PyPI version data", total=len(venvs))
 
         executor = stack.enter_context(ThreadPoolExecutor(max_workers=4))
 
@@ -68,5 +83,6 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
             result = future.result()
             if result.newer_pypi_version():
                 updates.append(result)
+            progress_bar.update(task, advance=1)
 
     return sorted(updates, key=lambda x: x.name)
