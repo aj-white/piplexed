@@ -24,8 +24,8 @@ def test_print_list(capsys: CaptureFixture[str]):
 
 def test_print_list_outdated(capsys: CaptureFixture[str]):
     packages = [
-        {"package": "B", "pipx": Version("1.5.0"), "pypi": Version("1.6.0")},
-        {"package": "C", "pipx": Version("2.6.0"), "pypi": Version("3.0a0")},
+        PackageInfo("B", Version("1.5.0"), python="3.11.3", latest_pypi_version=Version("1.6.0")),
+        PackageInfo("C", Version("2.6.0"), python="3.11.3", latest_pypi_version=Version("3.0a.0")),
     ]
 
     print_list_outdated(packages)
