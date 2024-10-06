@@ -74,7 +74,7 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
         stack.enter_context(progress_bar)
         task = progress_bar.add_task("[red]Getting PyPI version data", total=len(venvs))
 
-        executor = stack.enter_context(ThreadPoolExecutor(max_workers=4))
+        executor = stack.enter_context(ThreadPoolExecutor(max_workers=5))
 
         results = [executor.submit(get_pypi_versions, client, pkg, stable) for pkg in venvs]
 
