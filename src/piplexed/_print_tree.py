@@ -8,7 +8,6 @@ from rich.text import Text
 from rich.tree import Tree
 
 from piplexed.pipx_venvs import PackageInfo
-from piplexed.pypi_info import PackageVersions
 
 
 def print_list_tree(packages: Iterable[PackageInfo]) -> None:
@@ -27,17 +26,17 @@ def print_list_tree(packages: Iterable[PackageInfo]) -> None:
     rich_print(tree)
 
 
-def print_list_outdated(package_data: Iterable[PackageVersions]) -> None:
+def print_list_outdated(package_data: Iterable[PackageInfo]) -> None:
     tree = Tree("Pip❌ Outdated Packages", guide_style="cyan")
     for pkg in package_data:
         pkg_name = Text(
-            pkg["package"].title(),
+            pkg.name.title(),
             "bright_yellow bold",
         )
 
-        pipx_info = Text("pipx version - ", "white").append(f"{pkg['pipx']}", "red3")
-        pypi_info = Text("PyPI version - ", "white").append(f"{pkg['pypi']}", "green1")
-        if pkg["pypi"].is_prerelease or pkg["pypi"].is_devrelease:
+        pipx_info = Text("pipx version - ", "white").append(f"{pkg.version}", "red3")
+        pypi_info = Text("PyPI version - ", "white").append(f"{pkg.latest_pypi_version}", "green1")
+        if pkg.latest_pypi_version is not None and pkg.latest_pypi_version.is_prerelease:
             pypi_info.append(" ⚠", "bright_yellow")
 
         pkg_branch = tree.add(pkg_name)

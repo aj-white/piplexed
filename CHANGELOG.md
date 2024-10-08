@@ -2,6 +2,14 @@
 
 ## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.5.0...HEAD)
 
+## Added
+
+- Performance improvement, refactored to multi-threaded design.
+- Progress bar when getting data from pypi
+
+## Changed
+- Updated tests and added explanitory docstrings
+
 ## [0.5.0](https://github.com/aj-white/piplexed/compare/v0.4.0...v0.5.0)
 
 ### Added
