@@ -272,3 +272,18 @@ def test_pipx_metadata_warning(venv_dir_test_setup):
 
     with pytest.warns(UserWarning):
         get_pipx_metadata(venv_dir_test_setup)
+
+
+def test_newer_pypi_version():
+    package = PackageInfo("package1", "1.0.0", None, "1.1.0")
+    assert package.newer_pypi_version()
+
+
+def test_pypi_version_no_change():
+    package = PackageInfo("package1", "1.0.0", None, "1.0.0")
+    assert not package.newer_pypi_version()
+
+
+def test_pypi_version_no_value():
+    package = PackageInfo("package1", "1.0.0", None, None)
+    assert not package.newer_pypi_version()
