@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "piplexed"
 description = 'Find outdated python packages installed with pipx'
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = "MIT"
 keywords = ["pipx", "cli", " dependency"]
 authors = [
@@ -15,7 +15,6 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
