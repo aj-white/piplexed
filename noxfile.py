@@ -1,7 +1,7 @@
 import nox
 
-PYTHON_VERSIONS = ["3.12", "3.11", "3.10", "3.9"]
-PYTHON_DEFAULT_VERSION = "3.11"
+PYTHON_VERSIONS = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+PYTHON_DEFAULT_VERSION = "3.12"
 nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = (
     "tests",
