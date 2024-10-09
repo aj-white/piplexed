@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
@@ -42,12 +43,8 @@ Source = "https://github.com/aj-white/piplexed"
 [tool.hatch.version]
 path = "src/piplexed/version.py"
 
-[tool.black]
-target-version = ["py311"]
-line-length = 120
-
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 120
 
 [tool.ruff.lint]
