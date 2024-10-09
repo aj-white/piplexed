@@ -25,7 +25,7 @@ MOCK_BASE_PIPX_METADATA: dict[str, Any] = {
     "pipx_metadata_version": "0.1",
 }
 
-MOCK_PIPX_METADATA_0_4: dict[str, Any] = dict(MOCK_BASE_PIPX_METADATA, **{"source_interpreter": None})
+MOCK_PIPX_METADATA_0_4: dict[str, Any] = MOCK_BASE_PIPX_METADATA | {"source_interpreter": None}
 
 MOCK_PACKAGE_DATA_0_1: dict[str, Any] = {
     "package": None,
@@ -40,19 +40,16 @@ MOCK_PACKAGE_DATA_0_1: dict[str, Any] = {
     "package_version": "",
 }
 # would like to use | operator e.g. # MOCK_PACKAGE_DATA_0_1 | {"suffix": ""} but not supported in python 3.8
-MOCK_PACKAGE_DATA_0_2 = dict(MOCK_PACKAGE_DATA_0_1, **{"suffix": ""})
+MOCK_PACKAGE_DATA_0_2 = MOCK_PACKAGE_DATA_0_1 | {"suffix": ""}
 
-MOCK_PACKAGE_DATA_0_3_and_0_4 = dict(
-    MOCK_PACKAGE_DATA_0_2,
-    **{
-        "man_pages": [],
-        "man_paths": [],
-        "man_pages_of_dependencies": [],
-        "man_paths_of_dependencies": {},
-    },
-)
+MOCK_PACKAGE_DATA_0_3_and_0_4 = MOCK_PACKAGE_DATA_0_2 | {
+    "man_pages": [],
+    "man_paths": [],
+    "man_pages_of_dependencies": [],
+    "man_paths_of_dependencies": {},
+}
 
-MOCK_PACKAGE_DATA_0_5 = dict(MOCK_PACKAGE_DATA_0_3_and_0_4, **{"pinned": False})
+MOCK_PACKAGE_DATA_0_5 = MOCK_PACKAGE_DATA_0_3_and_0_4 | {"pinned": False}
 
 
 def mock_metadata(metadata_version: str, pypi_package: bool = True) -> dict[str, Any]:  # noqa: FBT001, FBT002
