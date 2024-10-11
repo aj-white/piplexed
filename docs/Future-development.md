@@ -7,6 +7,5 @@ It is only intended to work for packages that are installed from [PyPI](https://
 
 There are several areas I am thinking about improving:
 
-- Adding concurrency to speed up response time.
 - Highlighting when a new version is a major version increase.
 - Somehow getting changelog information (if available) and providing an option to display it.
