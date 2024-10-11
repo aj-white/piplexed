@@ -1,14 +1,23 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.5.0...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.6.0...HEAD)
+
+
+## [0.6.0](https://github.com/aj-white/piplexed/compare/v0.5.0...v0.6.0)
+
 
 ## Added
 
 - Performance improvement, refactored to multi-threaded design.
 - Progress bar when getting data from pypi
+- Added python 3.13 support
 
 ## Changed
-- Updated tests and added explanitory docstrings
+- Updated tests and added explanatory docstrings
+
+## Deprecated
+
+- Removed python 3.8 support as end of life
 
 ## [0.5.0](https://github.com/aj-white/piplexed/compare/v0.4.0...v0.5.0)
 
