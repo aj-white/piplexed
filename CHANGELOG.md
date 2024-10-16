@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.6.0...HEAD)
 
+- Use `uv` with nox
+
 
 ## [0.6.0](https://github.com/aj-white/piplexed/compare/v0.5.0...v0.6.0)
 
