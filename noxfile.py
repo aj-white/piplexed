@@ -2,7 +2,10 @@ import nox
 
 PYTHON_VERSIONS = ["3.13", "3.12", "3.11", "3.10", "3.9"]
 PYTHON_DEFAULT_VERSION = "3.12"
-nox.options.reuse_existing_virtualenvs = True
+
+nox.needs_version = ">=2024.3.2"
+nox.options.default_venv_backend = "uv|virtualenv"
+
 nox.options.sessions = (
     "tests",
     "coverage_report",
@@ -16,7 +19,6 @@ LINT_DEPENDENCIES = "requirements/linting.txt"
 
 @nox.session(python=PYTHON_VERSIONS)
 def tests(session):
-    session.run("python", "-m", "pip", "install", "-U", "pip")
     session.install(".", "-r", TEST_DEPENDENCIES)
     session.run("coverage", "run", "-m", "pytest", "tests")
 
@@ -31,7 +33,6 @@ def coverage_report(session):
 
 @nox.session(python=PYTHON_DEFAULT_VERSION)
 def lint(session):
-    session.run("python", "-m", "pip", "install", "-U", "pip")
     session.install(".", "-r", LINT_DEPENDENCIES)
     session.run("ruff", "format", "src", "--check")
     session.run("ruff", "check", ".")
@@ -40,6 +41,5 @@ def lint(session):
 
 @nox.session(python=PYTHON_DEFAULT_VERSION)
 def docs(session):
-    session.run("python", "-m", "pip", "install", "-U", "pip")
     session.install(".", "-r", DOC_DEPENDENCIES)
     session.run("mkdocs", "build", "--clean", "--strict")

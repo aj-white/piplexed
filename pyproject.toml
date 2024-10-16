@@ -122,3 +122,6 @@ ignore_errors = true
 [[tool.mypy.overrides]]
 module = "noxfile"
 disallow_untyped_decorators = false
+
+[tool.uv]
+python-downloads = "never"
