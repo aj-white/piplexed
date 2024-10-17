@@ -24,8 +24,6 @@ jobs:
       with:
         version: "0.4.22"
         enable-cache: true
-        cache-dependency-glob: |
-          "requirements**.txt"
     - name: Install nox
       run: |
         uv pip install nox
@@ -53,8 +51,6 @@ jobs:
       with:
         version: "0.4.22"
         enable-cache: true
-        cache-dependency-glob: |
-          "requirements**.txt"
     - name: Install nox
       run: |
         uv pip install nox
