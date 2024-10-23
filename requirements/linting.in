@@ -1,2 +1,4 @@
 ruff
 mypy
+types-requests
+urllib3<=2.2.2
