@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
 from contextlib import ExitStack
@@ -10,6 +11,7 @@ from packaging.version import Version
 from platformdirs import user_cache_path
 from pypi_simple import DistributionPackage
 from pypi_simple import PyPISimple
+from requests import Session
 from requests_cache import CachedSession
 from rich.progress import BarColumn
 from rich.progress import Progress
@@ -59,8 +61,11 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
     venvs: list[PackageInfo] = get_pipx_metadata()
 
     with ExitStack() as stack:
-        session = stack.enter_context(CachedSession(str(cache_dir), backend="sqlite", expire_after=360))
-        session.cache.delete(expired=True)
+        if sys.version_info >= (3, 12):  # noqa: UP036, RUF100
+            session = Session()
+        else:
+            session = stack.enter_context(CachedSession(str(cache_dir), backend="sqlite", expire_after=360))
+            session.cache.delete(expired=True)
 
         client = stack.enter_context(PyPISimple(session=session))
         progress_bar = Progress(
