@@ -64,7 +64,6 @@ def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = Tr
         if sys.version_info >= (3, 12):  # noqa: UP036, RUF100
             session = Session()
         else:
-            print("cache session")
             session = stack.enter_context(CachedSession(str(cache_dir), backend="sqlite", expire_after=360))
             session.cache.delete(expired=True)
 
