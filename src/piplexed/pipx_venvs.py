@@ -4,6 +4,7 @@ import json
 import platform
 import warnings
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 
 from packaging.utils import NormalizedName
@@ -13,6 +14,12 @@ from platformdirs import user_data_path
 
 PIPX_METADATA_VERSIONS = ["0.1", "0.2", "0.3", "0.4", "0.5"]
 OS_PLATFORM = platform.system()
+
+
+class ToolType(str, Enum):
+    PIPX = "pipx"
+    UV = "uv"
+    ALL = "all"
 
 
 def pipx_home_paths_for_os(platform_: str) -> tuple[Path, list[Path]]:
@@ -53,6 +60,7 @@ class PackageInfo:
     version: Version
     python: str | None = None
     latest_pypi_version: Version | None = None
+    tool: ToolType = "pipx"
 
     def newer_pypi_version(self) -> bool:
         if self.latest_pypi_version is not None:

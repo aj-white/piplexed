@@ -15,7 +15,9 @@ from rich.progress import TextColumn
 from rich.progress import TimeRemainingColumn
 
 from piplexed.pipx_venvs import PackageInfo
+from piplexed.pipx_venvs import ToolType
 from piplexed.pipx_venvs import get_pipx_metadata
+from piplexed.uv_tool_venvs import get_installed_uv_tools
 
 
 def pypi_package_info(client: PyPISimple, package_name: str) -> list[DistributionPackage]:
@@ -49,8 +51,19 @@ def get_pypi_versions(client: PyPISimple, package: PackageInfo, stable: bool) ->
     return package
 
 
-def find_outdated_packages(*, stable: bool = True) -> list[PackageInfo]:
-    venvs: list[PackageInfo] = get_pipx_metadata()
+def find_outdated_packages(*, stable: bool = True, tool: ToolType) -> list[PackageInfo]:
+    if tool.value == "pipx":
+        venvs: list[PackageInfo] = get_pipx_metadata()
+
+    elif tool.value == "uv":
+        venvs: list[PackageInfo] = get_installed_uv_tools()
+
+    elif tool.value == "all":
+        venvs = get_pipx_metadata() + get_installed_uv_tools()
+
+    else:
+        msg = f"unknown tool: {tool}"
+        raise ValueError(msg)
 
     with ExitStack() as stack:
         client = stack.enter_context(PyPISimple())
