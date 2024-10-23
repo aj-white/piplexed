@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.6.1
+
+- 🐛 Bypass cache to fix issue with sqlite and multi-threading in python 3.12+
+- 🚀 Use `uv` for nox and CI
+
+## 0.6.0
+
+- 🚀 Improve performance, added multi-threading
+- ✨Progress bar when getting data from PyPI
+- ✨ Added python 3.13 support
+
 ## 0.5.0
 - ✅ Testing for all pipx metadata versions has been added
 - 👽 How pipx home is located updated to bring into line with [pipx](https://github.com/pypa/pipx)
