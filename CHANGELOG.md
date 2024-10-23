@@ -1,8 +1,18 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.6.0...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.6.1...HEAD)
+
+## [0.6.1](https://github.com/aj-white/piplexed/compare/v0.6.0...v0.6.1)
+
+
+### Fixed
+
+- Issue with python 3.12+ and multi-threaded sqlite cache
+
+### Changed
 
 - Use `uv` with nox
+
 
 
 ## [0.6.0](https://github.com/aj-white/piplexed/compare/v0.5.0...v0.6.0)
