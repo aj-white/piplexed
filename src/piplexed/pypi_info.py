@@ -1,18 +1,13 @@
 from __future__ import annotations
 
-import sys
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
 from contextlib import ExitStack
-from pathlib import Path
 
 from packaging.version import InvalidVersion
 from packaging.version import Version
-from platformdirs import user_cache_path
 from pypi_simple import DistributionPackage
 from pypi_simple import PyPISimple
-from requests import Session
-from requests_cache import CachedSession
 from rich.progress import BarColumn
 from rich.progress import Progress
 from rich.progress import TaskProgressColumn
@@ -21,9 +16,6 @@ from rich.progress import TimeRemainingColumn
 
 from piplexed.pipx_venvs import PackageInfo
 from piplexed.pipx_venvs import get_pipx_metadata
-from piplexed.version import VERSION
-
-DEFAULT_CACHE: Path = user_cache_path(appname="piplexed", version=VERSION) / "pypi_cache.sqlite"
 
 
 def pypi_package_info(client: PyPISimple, package_name: str) -> list[DistributionPackage]:
@@ -57,17 +49,11 @@ def get_pypi_versions(client: PyPISimple, package: PackageInfo, stable: bool) ->
     return package
 
 
-def find_outdated_packages(cache_dir: Path = DEFAULT_CACHE, *, stable: bool = True) -> list[PackageInfo]:
+def find_outdated_packages(*, stable: bool = True) -> list[PackageInfo]:
     venvs: list[PackageInfo] = get_pipx_metadata()
 
     with ExitStack() as stack:
-        if sys.version_info >= (3, 12):  # noqa: UP036, RUF100
-            session = Session()
-        else:
-            session = stack.enter_context(CachedSession(str(cache_dir), backend="sqlite", expire_after=360))
-            session.cache.delete(expired=True)
-
-        client = stack.enter_context(PyPISimple(session=session))
+        client = stack.enter_context(PyPISimple())
         progress_bar = Progress(
             TextColumn("[progress.description]{task.description}"),
             BarColumn(),

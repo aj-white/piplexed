@@ -4,17 +4,15 @@
 #
 #    pip-compile requirements/linting.in
 #
-mypy==1.11.2
+mypy==1.13.0
     # via -r requirements/linting.in
 mypy-extensions==1.0.0
     # via mypy
-ruff==0.6.2
+ruff==0.7.1
     # via -r requirements/linting.in
 types-requests==2.32.0.20241016
     # via -r requirements/linting.in
 typing-extensions==4.12.2
     # via mypy
-urllib3==2.2.2
-    # via
-    #   -r requirements/linting.in
-    #   types-requests
+urllib3==2.2.3
+    # via types-requests
