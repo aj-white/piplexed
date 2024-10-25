@@ -239,8 +239,8 @@ def mock_get_pypi_versions():
         yield mock
 
 
-def test_find_outdated_packages(tmp_path, mock_get_pipx_metadata, mock_get_pypi_versions):
-    result = find_outdated_packages(cache_dir=tmp_path / "cache")
+def test_find_outdated_packages(mock_get_pipx_metadata, mock_get_pypi_versions):
+    result = find_outdated_packages()
     assert len(result) == 1
     assert result[0].name == "package1"
     assert result[0].version == "1.0.0"
@@ -250,8 +250,8 @@ def test_find_outdated_packages(tmp_path, mock_get_pipx_metadata, mock_get_pypi_
     assert mock_get_pypi_versions.call_count == 2
 
 
-def test_find_outdated_packages_unstable(tmp_path, mock_get_pipx_metadata, mock_get_pypi_versions):
-    result = find_outdated_packages(cache_dir=tmp_path / "cache", stable=False)
+def test_find_outdated_packages_unstable(mock_get_pipx_metadata, mock_get_pypi_versions):
+    result = find_outdated_packages(stable=False)
     assert len(result) == 1
     assert result[0].name == "package1"
     assert result[0].version == "1.0.0"
@@ -261,27 +261,27 @@ def test_find_outdated_packages_unstable(tmp_path, mock_get_pipx_metadata, mock_
     assert mock_get_pypi_versions.call_count == 2
 
 
-def test_find_outdated_packages_no_updates(tmp_path, mock_get_pipx_metadata, mock_get_pypi_versions):
+def test_find_outdated_packages_no_updates(mock_get_pipx_metadata, mock_get_pypi_versions):
     mock_get_pypi_versions.side_effect = lambda client, pkg, stable: (  # noqa: ARG005
         PackageInfo(name="package1", version="1.0.0", latest_pypi_version="1.0.0" if not stable else "1.0.0")
         if pkg.name == "package1"
         else PackageInfo(name="package2", version="2.0.0", latest_pypi_version="2.0.0")
     )
 
-    result = find_outdated_packages(cache_dir=tmp_path / "cache")
+    result = find_outdated_packages()
     assert not result
     mock_get_pipx_metadata.assert_called_once()
     assert mock_get_pypi_versions.call_count == 2
 
 
-def test_find_outdated_packages_unstable_no_updates(tmp_path, mock_get_pipx_metadata, mock_get_pypi_versions):
+def test_find_outdated_packages_unstable_no_updates(mock_get_pipx_metadata, mock_get_pypi_versions):
     mock_get_pypi_versions.side_effect = lambda client, pkg, stable: (  # noqa: ARG005
         PackageInfo(name="package1", version="1.0.0", latest_pypi_version="1.0.0" if not stable else "1.0.0")
         if pkg.name == "package1"
         else PackageInfo(name="package2", version="2.0.0", latest_pypi_version="2.0.0")
     )
 
-    result = find_outdated_packages(cache_dir=tmp_path / "cache", stable=False)
+    result = find_outdated_packages(stable=False)
     assert not result
     mock_get_pipx_metadata.assert_called_once()
     assert mock_get_pypi_versions.call_count == 2
