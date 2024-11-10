@@ -9,12 +9,12 @@ from unittest.mock import patch
 import pytest
 from packaging.version import Version
 
-from piplexed.pipx_venvs import PIPX_METADATA_VERSIONS
-from piplexed.pipx_venvs import PackageInfo
-from piplexed.pipx_venvs import get_local_venv
-from piplexed.pipx_venvs import get_pipx_metadata
-from piplexed.pipx_venvs import is_metadata_version_valid
-from piplexed.pipx_venvs import pipx_home_paths_for_os
+from piplexed.venvs.pipx_venvs import PIPX_METADATA_VERSIONS
+from piplexed.venvs.pipx_venvs import PackageInfo
+from piplexed.venvs.pipx_venvs import get_local_venv
+from piplexed.venvs.pipx_venvs import installed_pipx_tools
+from piplexed.venvs.pipx_venvs import is_metadata_version_valid
+from piplexed.venvs.pipx_venvs import pipx_home_paths_for_os
 
 # Metadata changes for 0.1 -> 0.3 and 0.4 -> 0.5 were at package level
 MOCK_BASE_PIPX_METADATA: dict[str, Any] = {
@@ -39,7 +39,7 @@ MOCK_PACKAGE_DATA_0_1: dict[str, Any] = {
     "app_paths_of_dependencies": {},
     "package_version": "",
 }
-# would like to use | operator e.g. # MOCK_PACKAGE_DATA_0_1 | {"suffix": ""} but not supported in python 3.8
+
 MOCK_PACKAGE_DATA_0_2 = MOCK_PACKAGE_DATA_0_1 | {"suffix": ""}
 
 MOCK_PACKAGE_DATA_0_3_and_0_4 = MOCK_PACKAGE_DATA_0_2 | {
@@ -115,7 +115,7 @@ def test_pipx_metadata(venv_dir_test_setup, pipx_metadata_version):
         pipx_metadata = mock_metadata(metadata_version=pipx_metadata_version, pypi_package=False)
         json.dump(pipx_metadata, f)
 
-    assert get_pipx_metadata(venv_dir_test_setup) == expected
+    assert installed_pipx_tools(venv_dir_test_setup) == expected
 
 
 def test_multiple_json_files_in_venv(venv_dir_test_setup):
@@ -132,12 +132,12 @@ def test_multiple_json_files_in_venv(venv_dir_test_setup):
         extra_data = {"test": "test extra data"}
         json.dump(extra_data, f)
 
-    assert get_pipx_metadata(venv_dir_test_setup) == expected
+    assert installed_pipx_tools(venv_dir_test_setup) == expected
 
 
 def test_venv_dir_is_none():
     with pytest.raises(FileNotFoundError) as execinfo:
-        get_pipx_metadata(venv_dir=None)
+        installed_pipx_tools(venv_dir=None)
 
     assert str(execinfo.value) == "Unable to find pipx venv installation location"
 
@@ -145,14 +145,14 @@ def test_venv_dir_is_none():
 def test_venv_dir_not_exists(tmp_path):
     non_existent_path = tmp_path / "joker"
     with pytest.raises(FileNotFoundError) as execinfo:
-        get_pipx_metadata(venv_dir=non_existent_path)
+        installed_pipx_tools(venv_dir=non_existent_path)
 
     assert str(execinfo.value) == "Unable to find pipx venv installation location"
 
 
 @pytest.fixture
 def mock_user_data_path():
-    with patch("piplexed.pipx_venvs.user_data_path") as mock_user_data:
+    with patch("piplexed.venvs.pipx_venvs.user_data_path") as mock_user_data:
         mock_user_data.return_value = "mock/user/data/pipx"
         yield mock_user_data
 
@@ -185,8 +185,8 @@ def mock_pipx_homes(monkeypatch, tmp_path):
     default_home = tmp_path / "default"
     fallback_homes = [tmp_path / "fallback1", tmp_path / "fallback2"]
 
-    monkeypatch.setattr("piplexed.pipx_venvs.DEFAULT_PIPX_HOME", default_home)
-    monkeypatch.setattr("piplexed.pipx_venvs.FALLBACK_PIPX_HOMES", fallback_homes)
+    monkeypatch.setattr("piplexed.venvs.pipx_venvs.DEFAULT_PIPX_HOME", default_home)
+    monkeypatch.setattr("piplexed.venvs.pipx_venvs.FALLBACK_PIPX_HOMES", fallback_homes)
 
     return (default_home, fallback_homes)
 
@@ -268,7 +268,7 @@ def test_pipx_metadata_warning(venv_dir_test_setup):
         json.dump(pipx_metadata, f)
 
     with pytest.warns(UserWarning):
-        get_pipx_metadata(venv_dir_test_setup)
+        installed_pipx_tools(venv_dir_test_setup)
 
 
 def test_newer_pypi_version():

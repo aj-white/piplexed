@@ -19,7 +19,7 @@ LINT_DEPENDENCIES = "requirements/linting.txt"
 
 @nox.session(python=PYTHON_VERSIONS)
 def tests(session):
-    session.install(".", "-r", TEST_DEPENDENCIES)
+    session.install("-e", ".", "-r", TEST_DEPENDENCIES)
     session.run("coverage", "run", "-m", "pytest", "tests")
 
 
@@ -33,7 +33,7 @@ def coverage_report(session):
 
 @nox.session(python=PYTHON_DEFAULT_VERSION)
 def lint(session):
-    session.install(".", "-r", LINT_DEPENDENCIES)
+    session.install("-e", ".", "-r", LINT_DEPENDENCIES)
     session.run("ruff", "format", "src", "--check")
     session.run("ruff", "check", ".")
     session.run("mypy", "src")

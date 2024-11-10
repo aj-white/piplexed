@@ -1,4 +1,5 @@
 -c pyproject.txt
 pytest
 pytest-pretty
+pytest-subprocess
 coverage[toml]

@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import warnings
-from typing import Optional
 
 
-def future_deprecation_warning(*, reason: str, replacement: Optional[str], deprecation_version: str) -> None:  # noqa: UP007
+def future_deprecation_warning(*, reason: str, replacement: str | None, deprecation_version: str) -> None:
     """Helper function to more cleanly inform users of upcoming deprecations
 
     Parameters
