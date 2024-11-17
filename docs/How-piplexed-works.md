@@ -2,16 +2,20 @@
 
 Below is a brief outline of the strategies employed to make piplexed work.
 
-## How does piplexed find pipx local virtual environments ?
+## How does piplexed find pipx/uv local virtual environments ?
 
-**Piplexed** uses the same paths and/or environment variables that **pipx** uses to determine the environment locations.
+**Piplexed** uses the same paths and/or environment variables that `pipx` uses to determine the environment locations. For `uv`, the in-built `uv tool dir` is directly used.
 
 
 ## How does piplexed find the version of each pipx installed package ?
 
-When **pipx** installs a package it creates a pipx_metadata.json file in the venv, which contains among other things, the installed package name, version and the python version in the venv.
+When `pipx` installs a package it creates a pipx_metadata.json file in the venv, which contains among other things, the installed package name, version and the python version in the venv.
 
 **Piplexed** finds and parses the pipx_metadata.json file.
+
+## How does piplexed find the version of each uv installed package ?
+
+Unlike `pipx`, `uv` does not keep any kind of metadata or manifest file of versions, so **piplexed** has to use `importlib.metadata` which is unfortunately a little slower than parsing a metadata/manifest file.
 
 ## How does piplexed determine what the latest PyPI version is ?
 
