@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.0.0
+
+- ✨ Add support for tools installed with `uv tool`
+- 📝 Improve and update documentation regarding usage.
+
 ## 0.6.1
 
 - 🐛 Bypass cache to fix issue with sqlite and multi-threading in python 3.12+

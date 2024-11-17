@@ -1,45 +1,43 @@
 # Command Line Options
 
-The commands of *piplexed* can been seen by running `piplexed --help`
+
+## Usage
+
+```console
+piplexed [COMMAND] <OPTIONS>
+```
+
+The commands of **piplexed** can been seen by running `piplexed --help`
 
 For each each command running `--help` will show all the command line options, which are detailed below.
 ```shell
-$ piplexed list --help
-$ piplexed version --help
+piplexed list --help
+piplexed version --help
 ```
 
 ## piplexed list
 
-List all packages installed via pipx (output in table format by default)
-```shell
-$ piplexed list
+#### Usage
+
+```console
+piplexed list <OPTIONS>
 ```
 
-### `--outdated` / `-O`
-Show any packages installed via pipx that have a newer version on PyPI
-```shell
-$ piplexed list --outdated
-```
+#### Options:
 
+|**Name**|**Type**|**Descrtiption**|**Default**|
+|---|---|---|---|
+`--outdated`, `-O`|boolean|Check PyPI for newer versions of installed packages/tools. If `False` list packages/tools installed with specified tool.| `False`
+`--pre`, `-P`|boolean|include pre-releases in check for newer versions|`False`
+`--tree`, `-T`|boolean|Show results in a tree format|`False`
+`--tool`|text|Choose which tool packages werre installed with. Options are `pipx`, `uv`, `all`|`pipx`
 
-### `--pre` / `P`
-Include pre-release or dev-releases when determining newer versions (use in conjunction with `--outdated`)
-```shell
-$ piplexed list --outdated --pre
-```
-
-### `--tree` / `-T`
-Output as a rich tree (less useful if lots of packages)
-```shell
-$ piplexed list --tree
-$ piplexed list --outdated --tree
-```
 
 ## piplexed version
 
-Show version
+#### Usage
 
-```shell
-$ piplexed version
+```console
+piplexed version
 0.1.2
 ```

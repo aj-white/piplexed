@@ -1,5 +1,5 @@
 site_name: piplexed
-site_description: Find outdated pipx installed packages
+site_description: Find outdated tools installed with pipx or uv
 
 theme:
   name: 'material'
@@ -10,14 +10,14 @@ theme:
     accent: purple
     toggle:
       icon: material/lightbulb
-      name: Switch to light mode
+      name: Switch to dark mode
   - media:
     scheme: slate
     primary: light blue
     accent: amber
     toggle:
       icon: material/lightbulb-outline
-      name: Switch to dark mode
+      name: Switch to light mode
   features:
       - content.code.copy
   icon:
@@ -25,9 +25,14 @@ theme:
 repo_name: aj-white/piplexed
 repo_url: https://github.com/aj-white/piplexed
 markdown_extensions:
-  - admonition
+  pymdownx.blocks.admonition:
+  pymdownx.blocks.details:
+  pymdownx.blocks.tab:
+    alternate_style: True
 nav:
-  - Getting Started: index.md
+  - Home: index.md
+  - Installation.md
+  - Getting Started: Getting-started.md
   - Command-line-options.md
   - Why-piplexed.md
   - How-piplexed-works.md

@@ -3,10 +3,9 @@ from __future__ import annotations
 import typer
 
 import piplexed
-from piplexed._print_table import print_list_table
-from piplexed._print_table import print_outdated_table
-from piplexed._print_tree import print_list_outdated
-from piplexed._print_tree import print_list_tree
+from piplexed.app import print_installed_tools
+from piplexed.app import print_outdated_tools
+from piplexed.venvs import ToolType
 
 app = typer.Typer()
 
@@ -18,27 +17,24 @@ def version() -> None:
 
 @app.command()
 def list(
-    outdated: bool = typer.Option(False, "--outdated", "-O", help="Find outdated packages installed with pipx"),
-    is_prelease: bool = typer.Option(
+    outdated: bool = typer.Option(
+        False, "--outdated", "-O", help="Find installed packages/tools with newer versions on PyPI"
+    ),
+    is_prerelease: bool = typer.Option(
         False,
         "--pre",
         "-P",
         help="Include pre and dev releases in latest pypi version search",
     ),
     tree: bool = typer.Option(False, "--tree", "-T", help="print output as a tree (default is table)"),
+    tool: ToolType = typer.Option(
+        "pipx", "--tool", help="choose tool packages were installed with, 'pipx', 'uv', 'all"
+    ),
 ) -> None:
-    if outdated and is_prelease and tree:
-        print_list_outdated(piplexed.find_outdated_packages(stable=False))
-    elif outdated and is_prelease:
-        print_outdated_table(piplexed.find_outdated_packages(stable=False))
-    elif outdated and tree and not is_prelease:
-        print_list_outdated(piplexed.find_outdated_packages(stable=True))
-    elif outdated and not is_prelease:
-        print_outdated_table(piplexed.find_outdated_packages(stable=True))
-    elif tree:
-        print_list_tree(piplexed.get_pipx_metadata())
+    if outdated:
+        print_outdated_tools(is_prerelease=is_prerelease, tree=tree, tool=tool)
     else:
-        print_list_table(piplexed.get_pipx_metadata())
+        print_installed_tools(tree=tree, tool=tool)
 
 
 if __name__ == "__main__":

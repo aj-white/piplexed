@@ -1,13 +1,13 @@
 # SPDX-FileCopyrightText: 2023-present Andrew White <white-aj@outlook.com>
 #
 # SPDX-License-Identifier: MIT
-from .pipx_venvs import get_pipx_metadata
-from .pypi_info import find_outdated_packages
+from .app import print_installed_tools
+from .app import print_outdated_tools
 from .version import VERSION
 
 __all__ = [
-    "get_pipx_metadata",
-    "find_outdated_packages",
+    "print_installed_tools",
+    "print_outdated_tools",
     "VERSION",
 ]
 

@@ -3,13 +3,13 @@ from __future__ import annotations
 import json
 import platform
 import warnings
-from dataclasses import dataclass
 from pathlib import Path
 
-from packaging.utils import NormalizedName
 from packaging.utils import canonicalize_name
 from packaging.version import Version
 from platformdirs import user_data_path
+
+from piplexed.venvs import PackageInfo
 
 PIPX_METADATA_VERSIONS = ["0.1", "0.2", "0.3", "0.4", "0.5"]
 OS_PLATFORM = platform.system()
@@ -47,25 +47,11 @@ def get_local_venv() -> Path | None:
 PIPX_LOCAL_VENVS: Path | None = get_local_venv()
 
 
-@dataclass
-class PackageInfo:
-    name: NormalizedName
-    version: Version
-    python: str | None = None
-    latest_pypi_version: Version | None = None
-
-    def newer_pypi_version(self) -> bool:
-        if self.latest_pypi_version is not None:
-            return self.latest_pypi_version > self.version
-        else:
-            return False
-
-
 def is_metadata_version_valid(metadata_version: str, pipx_metadata_vsn: list[str] = PIPX_METADATA_VERSIONS) -> bool:
     return metadata_version in pipx_metadata_vsn
 
 
-def get_pipx_metadata(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
+def installed_pipx_tools(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
     venvs = []
     if venv_dir is None or not venv_dir.exists():
         msg = "Unable to find pipx venv installation location"

@@ -94,6 +94,7 @@ extend-immutable-calls = ["typer.Option"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/piplexed/cli.py" = ["FBT001", "A001"]  # typer uses booleans in CLI args
+"src/piplexed/app.py" = ["FBT001"]
 
 [tool.ruff.format]
 quote-style = "double"
