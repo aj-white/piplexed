@@ -15,7 +15,6 @@ from piplexed.venvs import ToolType
 
 def find_uv_tool_dir() -> str:
     uv_path = shutil.which("uv")
-    print(uv_path)
     uv_path = cast(str, uv_path)
     try:
         ret = subprocess.run([uv_path, "tool", "dir"], check=False, text=True, capture_output=True)  # noqa: S603

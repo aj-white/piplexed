@@ -17,7 +17,9 @@ def version() -> None:
 
 @app.command()
 def list(
-    outdated: bool = typer.Option(False, "--outdated", "-O", help="Find outdated packages installed with pipx"),
+    outdated: bool = typer.Option(
+        False, "--outdated", "-O", help="Find installed packages/tools with newer versions on PyPI"
+    ),
     is_prerelease: bool = typer.Option(
         False,
         "--pre",
