@@ -36,7 +36,7 @@ piplexed list --outdated
 ```
 
 <p align="left">
-<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/ing/piplexed-list-out.gif" alt="piplexed in action"/>
+<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/img/piplexed-list-out.gif" alt="piplexed in action" width=750/>
 </p>
 
 #### Installed with uv
@@ -51,6 +51,10 @@ piplexed list --outdated --tool uv
 ```console
 piplexed list --outdated --pre
 ```
+
+<p>
+<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/img/piplexed-list-outdated-pre.PNG" alt="pipx installed tool include prerelease" width=300/>
+</p>
 
 #### Installed with uv
 ```consle
@@ -82,7 +86,7 @@ piplexed list --tree
 An optional tree flag can be passed for a tree view (less useful if there are a lot of packages)
 
 <p>
-<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/img/piplexed-list-tree.PNG" alt="piplexed list tree" width=300/>
+<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/img/piplexed-list-tree.PNG" alt="piplexed list tree" width=200/>
 </p>
 
 #### With UV

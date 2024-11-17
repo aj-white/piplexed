@@ -8,7 +8,7 @@
 ---
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/ing/piplexed-list-out.gif" alt="piplexed in action"/>
+<img src="https://raw.githubusercontent.com/aj-white/piplexed/main/docs/img/piplexed-list-out.gif" alt="piplexed in action"/>
 </p>
 
 

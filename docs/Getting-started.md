@@ -68,7 +68,7 @@ piplexed list --outdated --pre --tool uv
 </a>
 </p>
 ///
-///
+
 ///
 
 /// tab | pipx and uv installed
