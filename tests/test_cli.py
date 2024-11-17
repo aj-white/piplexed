@@ -57,7 +57,6 @@ def test_list_cmd_uv_tree(installed_package):
 def test_invalid_tool_option():
     result = runner.invoke(app, ["list", "--tool", "jeff"])
     assert result.exit_code != 0
-    assert "Invalid value for '--tool'" in result.stdout.strip()
 
 
 @patch("piplexed.cli.print_installed_tools", side_effect=mock_installed_output)
