@@ -1,6 +1,17 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v0.6.1...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v1.0.0...HEAD)
+
+## [1.0.0](https://github.com/aj-white/piplexed/compare/v0.6.1...v1.0.0)
+
+### Added
+
+- UV compatibility - show and find outdated packages intstalled with `uv tool`
+
+### Changed
+
+- ReadME updated with improvements to animated gif and layout.
+- Documentation has under gone a revamp to improve clarity.
 
 ## [0.6.1](https://github.com/aj-white/piplexed/compare/v0.6.0...v0.6.1)
 
