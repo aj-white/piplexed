@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../How-piplexed-works/">
+        <link rel="prev" href="..">
       
       
-        <link rel="next" href="../Release-notes/">
+        <link rel="next" href="../Getting-started/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Future Development - piplexed</title>
+        <title>Installation - piplexed</title>
       
     
     
@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#future-development" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -112,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Future Development
+              Installation
             
           </span>
         </div>
@@ -272,10 +267,17 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../Installation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -284,6 +286,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -372,19 +375,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Future-development/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +387,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -435,8 +428,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -454,14 +445,35 @@
   
 
 
-<h1 id="future-development">Future Development</h1>
-<p><strong>Piplexed</strong> is a project that I built for my workflow, but it may not work for everyone.</p>
-<p>It is only intended to work for packages that are installed from <a href="https://pypi.org">PyPI</a>, so will not work for local packages or git/url etc.</p>
-<p>There are several areas I am thinking about improving:</p>
-<ul>
-<li>Highlighting when a new version is a major version increase.</li>
-<li>Somehow getting changelog information (if available) and providing an option to display it.</li>
-</ul>
+  <h1>Installation</h1>
+
+<p><strong>Piplexed</strong> is designed to be installed globally via <a href="https://github.com/pypa/pipx">pipx</a> or <a href="https://github.com/astral-sh/uv">uv</a>.</p>
+<p>Both <code>pipx</code> and <code>uv</code> (via <code>uv tool</code>) allow the install Python CLI applications globally in isolated virtual environments.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">pipx</label><label for="__tabbed_1_2">uv</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre><code class="language-console">pipx install piplexed
+</code></pre>
+</div>
+<div class="tabbed-block">
+<pre><code class="language-console">uv tool install piplexed
+</code></pre>
+</div>
+</div>
+</div>
+<p>Alternatively you can run <strong>piplexed</strong> wihtout installation, supplying the required arguments shown below</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">pipx</label><label for="__tabbed_2_2">uv</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre><code class="language-console">pipx run -- piplexed &lt;ARGS&gt;
+</code></pre>
+</div>
+<div class="tabbed-block">
+<pre><code class="language-console">uv tool run piplexed &lt;ARGS&gt;
+</code></pre>
+</div>
+</div>
+</div>
 
 
 
