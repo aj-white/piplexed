@@ -5,6 +5,7 @@ import pytest
 from packaging.version import Version
 
 from piplexed.venvs import PackageInfo
+from piplexed.venvs.uv_venvs import find_uv
 from piplexed.venvs.uv_venvs import find_uv_tool_dir
 from piplexed.venvs.uv_venvs import get_python_path
 from piplexed.venvs.uv_venvs import installed_uv_tools
@@ -12,34 +13,45 @@ from piplexed.venvs.uv_venvs import uv_tool_version
 
 
 @patch("piplexed.venvs.uv_venvs.shutil.which")
-def test_find_uv_tool_dir(mock_uv_path, fp):
+def test_find_uv_when_installed(mock_uv_path):
     mock_uv_path.return_value = "mock/path/uv"
 
-    fp.register(["mock/path/uv", "tool", "dir"], stdout="uv/tool/dir")
-
-    result = find_uv_tool_dir()
-    assert result == "uv/tool/dir"
+    result = find_uv()
+    assert result == (True, "mock/path/uv")
 
 
 @patch("piplexed.venvs.uv_venvs.shutil.which")
-def test_no_uv(mock_uv_path):
-    mock_uv_path.return_value = "mock/path/uv"
+def test_find_uv_not_installed(mock_uv_path):
+    mock_uv_path.return_value = None
 
-    with pytest.raises(FileNotFoundError):
-        find_uv_tool_dir()
+    result = find_uv()
+    assert result == (False, "uv")
 
 
-@patch("piplexed.venvs.uv_venvs.shutil.which")
-def test_uv_tool_dir_failed_returncode(mock_uv_path, fp):
+def test_find_uv_tool_dir_present(tmp_path, fp):
+    mock_uv_path = tmp_path / "uv"
+    mock_tool_dir = mock_uv_path / "tool"
+    mock_tool_dir.mkdir(parents=True)
+    fp.register([str(mock_uv_path), "tool", "dir"], stdout=str(mock_tool_dir))
+
+    assert find_uv_tool_dir(str(mock_uv_path)) == str(mock_tool_dir)
+
+
+def test_find_uv_tool_dir_not_present(tmp_path, fp):
+    mock_uv_path = tmp_path / "uv"
+    mock_tool_dir = mock_uv_path / "tool"
+    fp.register([str(mock_uv_path), "tool", "dir"], stdout=str(mock_tool_dir))
+
+    assert find_uv_tool_dir(str(mock_uv_path)) is None
+
+
+def test_uv_tool_dir_failed_returncode(fp):
     def callback_function(process):
         process.returncode = 1
 
-    mock_uv_path.return_value = "mock/path/uv"
-
     fp.register(["mock/path/uv", "tool", "dir"], stdout="uv/tool/dir", callback=callback_function)
 
-    with pytest.raises(FileNotFoundError):
-        find_uv_tool_dir()
+    assert find_uv_tool_dir("mock/path/uv") is None
 
 
 def test_uv_tool_version_windows(tmp_path, fp):
