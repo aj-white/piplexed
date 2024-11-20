@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.0.1
+
+- 🐛 Fix crashes when `uv` or `pipx` not installed
+
 ## 1.0.0
 
 - ✨ Add support for tools installed with `uv tool`
