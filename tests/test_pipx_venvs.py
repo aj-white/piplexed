@@ -9,8 +9,8 @@ from unittest.mock import patch
 import pytest
 from packaging.version import Version
 
+from piplexed.venvs import PackageInfo
 from piplexed.venvs.pipx_venvs import PIPX_METADATA_VERSIONS
-from piplexed.venvs.pipx_venvs import PackageInfo
 from piplexed.venvs.pipx_venvs import get_local_venv
 from piplexed.venvs.pipx_venvs import installed_pipx_tools
 from piplexed.venvs.pipx_venvs import is_metadata_version_valid
@@ -136,18 +136,12 @@ def test_multiple_json_files_in_venv(venv_dir_test_setup):
 
 
 def test_venv_dir_is_none():
-    with pytest.raises(FileNotFoundError) as execinfo:
-        installed_pipx_tools(venv_dir=None)
-
-    assert str(execinfo.value) == "Unable to find pipx venv installation location"
+    assert installed_pipx_tools(venv_dir=None) == []
 
 
 def test_venv_dir_not_exists(tmp_path):
     non_existent_path = tmp_path / "joker"
-    with pytest.raises(FileNotFoundError) as execinfo:
-        installed_pipx_tools(venv_dir=non_existent_path)
-
-    assert str(execinfo.value) == "Unable to find pipx venv installation location"
+    assert installed_pipx_tools(venv_dir=non_existent_path) == []
 
 
 @pytest.fixture

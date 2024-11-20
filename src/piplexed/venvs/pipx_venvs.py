@@ -43,7 +43,6 @@ def get_local_venv() -> Path | None:
     return None
 
 
-# PIPX_HOME = Path(os.environ.get("PIPX_HOME", DEFAULT_PIPX_HOME)).resolve()
 PIPX_LOCAL_VENVS: Path | None = get_local_venv()
 
 
@@ -52,10 +51,9 @@ def is_metadata_version_valid(metadata_version: str, pipx_metadata_vsn: list[str
 
 
 def installed_pipx_tools(venv_dir: Path | None = PIPX_LOCAL_VENVS) -> list[PackageInfo]:
-    venvs = []
+    venvs: list[PackageInfo] = []
     if venv_dir is None or not venv_dir.exists():
-        msg = "Unable to find pipx venv installation location"
-        raise FileNotFoundError(msg)
+        return venvs
     for env in venv_dir.iterdir():
         for item in env.iterdir():
             if item.name == "pipx_metadata.json":  # pragma: no branch

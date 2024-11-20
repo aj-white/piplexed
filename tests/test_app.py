@@ -51,21 +51,62 @@ def test_find_installed_tools_all(pipx_tools, uv_tools, pipx_package, uv_package
     assert app.find_installed_tools(ToolType.ALL) == expected
 
 
+@patch("piplexed.app.PIPX_LOCAL_VENVS", None)
 @patch("piplexed.app.installed_pipx_tools")
-def test_find_installed_tools_pipx_none(pipx_tools):
+def test_find_installed_tools_pipx_none(pipx_tools, capsys):
     #  installed tools will return empty list if can't find any tools
     pipx_tools.return_value = []
 
-    with pytest.raises(FileNotFoundError):
-        app.find_installed_tools(ToolType.PIPX)
+    app.find_installed_tools(ToolType.PIPX)
+
+    out, err = capsys.readouterr()
+    assert not out
+    error_output = [s.strip() for s in err.splitlines()]
+    assert "Error" in error_output[0]
 
 
+@patch("piplexed.app.PIPX_LOCAL_VENVS", "mock/pipx/venvs")
+@patch("piplexed.app.installed_pipx_tools")
+def test_find_installed_tools_pipx_no_tools_found(pipx_tools, capsys):
+    #  installed tools will return empty list if can't find any tools
+    pipx_tools.return_value = []
+
+    app.find_installed_tools(ToolType.PIPX)
+
+    out, err = capsys.readouterr()
+    assert not err
+    output = [s.strip() for s in out.splitlines()]
+    assert "Info" in output[0]
+    assert "mock/pipx/venvs" in output[1]
+
+
+@patch("piplexed.app.HAS_UV", False)
 @patch("piplexed.app.installed_uv_tools")
-def test_find_installed_tools_uv_none(uv_tools):
+def test_find_installed_tools_uv_none(uv_tools, capsys):
     uv_tools.return_value = []
 
-    with pytest.raises(FileNotFoundError):
-        app.find_installed_tools(ToolType.UV)
+    app.find_installed_tools(ToolType.UV)
+
+    out, err = capsys.readouterr()
+    assert not out
+    error_output = [s.strip() for s in err.splitlines()]
+    assert "Error" in error_output[0]
+    assert "path" in error_output[2]
+
+
+@patch("piplexed.app.UV_TOOL_DIR", None)
+@patch("piplexed.app.HAS_UV", True)
+@patch("piplexed.app.installed_uv_tools")
+def test_find_installed_tools_uv_installed_no_tool_dir(uv_tools, capsys):
+    uv_tools.return_value = []
+
+    app.find_installed_tools(ToolType.UV)
+
+    out, err = capsys.readouterr()
+    assert not out
+    error_output = [s.strip() for s in err.splitlines()]
+    assert "Error" in error_output[0]
+    assert "uv tool directory" in error_output[2]
 
 
 @patch("piplexed.app.installed_uv_tools")
@@ -98,8 +139,8 @@ def test_find_installed_tools_all_but_pipx_and_uv_none(pipx_tools, uv_tools):
     pipx_tools.return_value = []
     uv_tools.return_value = []
 
-    with pytest.raises(FileNotFoundError):
-        app.find_installed_tools(ToolType.ALL)
+    result = app.find_installed_tools(ToolType.ALL)
+    assert result == []
 
 
 @patch("piplexed.app.find_installed_tools")
