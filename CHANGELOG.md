@@ -1,6 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v1.0.0...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v1.0.1...HEAD)
+
+## [1.0.1](https://github.com/aj-white/piplexed/compare/v1.0.0...v1.0.1)
+
+## Fixed
+
+- Crashing when `uv` or `pipx` not installed
 
 ## [1.0.0](https://github.com/aj-white/piplexed/compare/v0.6.1...v1.0.0)
 
