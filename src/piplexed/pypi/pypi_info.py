@@ -7,6 +7,7 @@ from contextlib import ExitStack
 from packaging.version import InvalidVersion
 from packaging.version import Version
 from pypi_simple import DistributionPackage
+from pypi_simple import NoSuchProjectError
 from pypi_simple import PyPISimple
 from rich.progress import BarColumn
 from rich.progress import Progress
@@ -72,7 +73,11 @@ def find_most_recent_version_on_pypi(*, venvs: list[PackageInfo], is_prerelease:
 
         updates = []
         for future in as_completed(results):
-            result = future.result()
+            try:
+                result = future.result()
+            except NoSuchProjectError:
+                continue
+
             if result.newer_pypi_version():
                 updates.append(result)
             progress_bar.update(task, advance=1)
