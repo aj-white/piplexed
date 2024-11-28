@@ -1,10 +1,21 @@
 # Changelog
 
-## [Unreleased](https://github.com/aj-white/piplexed/compare/v1.0.1...HEAD)
+## [Unreleased](https://github.com/aj-white/piplexed/compare/v1.1.0...HEAD)
+
+## [1.1.0](https://github.com/aj-white/piplexed/compare/v1.0.1...v1.1.0)
+
+### Fixed
+
+- Packages installed with optional extras now show in `piplexed list`
+- Packages installed from location other than PyPI show in `piplexed list` and are ignored in version check if not available on PyPI.
+
+### Added
+
+- Pull request and issue templates
 
 ## [1.0.1](https://github.com/aj-white/piplexed/compare/v1.0.0...v1.0.1)
 
-## Fixed
+### Fixed
 
 - Crashing when `uv` or `pipx` not installed
 
