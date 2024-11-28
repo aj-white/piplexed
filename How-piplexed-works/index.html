@@ -580,8 +580,11 @@ There are 2 APIs for PyPI the json and simple API, with the <a href="https://war
 <p><strong>Piplexed</strong> uses the simple API for PyPI (via the pypi-simple package), which provides an HTML (or JSON) page that lists all versions of package files (sdists and wheels) that have been uploaded.
 Because wheels are often platform specific, there is no guarantee that a suitable wheel distribution is available. <strong>Piplexed</strong> avoids the complications of obtating platform details and python versions and just looks at the <em>sdist</em> versions.</p>
 <p><strong>Piplexed</strong> employs the strategy recommended in <a href="https://peps.python.org/pep-0700/">PEP 700</a> to get the <em>latest</em> version, which utilises the <a href="https://github.com/pypa/packaging">packaging</a> package to parse version numbers.</p>
-<p>!!! note
-    Most of this info was gleaned from looking at and researching <a href="https://github.com/gaborbernat">Bernát Gábor's</a> package <a href="https://github.com/gaborbernat/pypi_changes">pypi-changes</a>, which also has heavily influenced this project.</p>
+<p>If any packages/tools have been installed that are not available on PyPI, such as local wheels or git repo, these will be ignored when checking for lastest PyPI version.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most of this info was gleaned from looking at and researching <a href="https://github.com/gaborbernat">Bernát Gábor's</a> package <a href="https://github.com/gaborbernat/pypi_changes">pypi-changes</a>, which also has heavily influenced this project.</p>
+</div>
 
 
 
