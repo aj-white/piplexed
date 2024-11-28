@@ -29,5 +29,8 @@ Because wheels are often platform specific, there is no guarantee that a suitabl
 
 **Piplexed** employs the strategy recommended in [PEP 700](https://peps.python.org/pep-0700/) to get the *latest* version, which utilises the [packaging](https://github.com/pypa/packaging) package to parse version numbers.
 
-!!! note
-    Most of this info was gleaned from looking at and researching [Bernát Gábor's](https://github.com/gaborbernat) package [pypi-changes](https://github.com/gaborbernat/pypi_changes), which also has heavily influenced this project.
+If any packages/tools have been installed that are not available on PyPI, such as local wheels or git repo, these will be ignored when checking for lastest PyPI version.
+
+/// note
+Most of this info was gleaned from looking at and researching [Bernát Gábor's](https://github.com/gaborbernat) package [pypi-changes](https://github.com/gaborbernat/pypi_changes), which also has heavily influenced this project.
+///

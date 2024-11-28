@@ -4,11 +4,13 @@ from unittest.mock import patch
 import pytest
 from packaging.version import Version
 from pypi_simple import DistributionPackage
+from pypi_simple import NoSuchProjectError
 from pypi_simple.client import PyPISimple
 
 from piplexed.pypi.pypi_info import find_most_recent_version_on_pypi
 from piplexed.pypi.pypi_info import get_pypi_versions
 from piplexed.pypi.pypi_info import latest_pypi_version
+from piplexed.pypi.pypi_info import pypi_package_info
 from piplexed.venvs.pipx_venvs import PackageInfo
 
 
@@ -213,6 +215,7 @@ def mocked_venvs():
     return [
         PackageInfo(name="package1", version="1.0.0"),
         PackageInfo(name="package2", version="2.0.0"),
+        PackageInfo(name="nonpypi-package", version="1.5.1"),
     ]
 
 
@@ -230,8 +233,10 @@ def mock_get_pypi_versions():
                 return PackageInfo(
                     name="package1", version="1.0.0", latest_pypi_version="1.1.0" if not is_prerelease else "1.2.0-beta"
                 )
-            else:
+            elif pkg.name == "package2":
                 return PackageInfo(name="package2", version="2.0.0", latest_pypi_version="2.0.0")
+            else:
+                raise NoSuchProjectError(project="nonpypi-package", url="mock/url")
 
         mock.side_effect = side_effect
         yield mock
@@ -243,7 +248,7 @@ def test_find_most_recent_version_on_pypi(mocked_venvs, mock_get_pypi_versions):
     assert result[0].name == "package1"
     assert result[0].version == "1.0.0"
     assert result[0].latest_pypi_version == "1.1.0"
-    assert mock_get_pypi_versions.call_count == 2
+    assert mock_get_pypi_versions.call_count == 3
 
 
 def test_find_most_recent_version_on_pypi_is_prerelease(mocked_venvs, mock_get_pypi_versions):
@@ -252,7 +257,7 @@ def test_find_most_recent_version_on_pypi_is_prerelease(mocked_venvs, mock_get_p
     assert result[0].name == "package1"
     assert result[0].version == "1.0.0"
     assert result[0].latest_pypi_version == "1.2.0-beta"
-    assert mock_get_pypi_versions.call_count == 2
+    assert mock_get_pypi_versions.call_count == 3
 
 
 def test_find_most_recent_version_on_pypi_no_updates(mocked_venvs, mock_get_pypi_versions):
@@ -264,7 +269,7 @@ def test_find_most_recent_version_on_pypi_no_updates(mocked_venvs, mock_get_pypi
 
     result = find_most_recent_version_on_pypi(venvs=mocked_venvs, is_prerelease=False)
     assert not result
-    assert mock_get_pypi_versions.call_count == 2
+    assert mock_get_pypi_versions.call_count == 3
 
 
 def test_find_most_recent_version_on_pypi_unstable_no_updates(mocked_venvs, mock_get_pypi_versions):
@@ -276,4 +281,11 @@ def test_find_most_recent_version_on_pypi_unstable_no_updates(mocked_venvs, mock
 
     result = find_most_recent_version_on_pypi(venvs=mocked_venvs, is_prerelease=True)
     assert not result
-    assert mock_get_pypi_versions.call_count == 2
+    assert mock_get_pypi_versions.call_count == 3
+
+
+def test_pypi_package_info_non_pypi_project():
+    mock_client = create_autospec(PyPISimple, instance=True)
+    mock_client.get_project_page.side_effect = NoSuchProjectError("jeff", "mock/url")
+    with pytest.raises(NoSuchProjectError):
+        pypi_package_info(client=mock_client, package_name="jeff")
