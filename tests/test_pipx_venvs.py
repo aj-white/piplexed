@@ -118,7 +118,10 @@ def test_pipx_metadata(venv_dir_test_setup, pipx_metadata_version):
         pipx_metadata = mock_metadata(metadata_version=pipx_metadata_version, pypi_package=False)
         json.dump(pipx_metadata, f)
 
-    assert installed_pipx_tools(venv_dir_test_setup) == expected
+    results = installed_pipx_tools(venv_dir_test_setup)
+    assert expected[0] in results
+    assert expected[1] in results
+    assert len(results) == len(expected)
 
 
 def test_multiple_json_files_in_venv(venv_dir_test_setup):
