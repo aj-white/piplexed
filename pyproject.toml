@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "piplexed"
-description = 'Find outdated python packages installed with pipx'
+description = 'Find outdated python packages installed with pipx or uv tool'
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
